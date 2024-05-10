@@ -4,14 +4,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+Follow the steps to run in local
+
 ### `CD FRONTEND`
 
-### `npm start
+### `npm start`
+
+new terminal 
 
 ### `CD BACKEND`
 
 ### `npm start`
 
+<hr>
 In the project directory, you can run:
 
 ### `npm start`
