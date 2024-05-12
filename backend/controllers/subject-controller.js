@@ -215,6 +215,23 @@ const setAnnouncement = async (req, res) => {
   }
 };
 
+const setQuiz = async (req, res) => {
+  console.log(req.params.id);
+  console.log(req.body.announcements);
+  try {
+    const result = await Subject.findByIdAndUpdate(
+      req.params.id,
+      {
+        announcements: req.body.announcements,
+      },
+      { new: true }
+    );
+    return res.send(result);
+  } catch (error) {
+    res.status(500).json(err);
+  }
+};
+
 module.exports = {
   setSyallabus,
   subjectCreate,

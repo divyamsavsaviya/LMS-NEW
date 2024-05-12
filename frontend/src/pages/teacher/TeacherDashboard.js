@@ -26,6 +26,7 @@ import AddAssignment from './assignmentRelated/addAssignment';
 import StudentExamMarks from '../admin/studentRelated/StudentExamMarks';
 import ShowSubjects from './TeacherShowSubjects';
 import ViewSubject from './subjectsRelated/ViewSubject';
+import AddQuiz from './assignmentRelated/addQuiz';
 
 const TeacherDashboard = () => {
     const [open, setOpen] = useState(true);
@@ -90,6 +91,7 @@ const TeacherDashboard = () => {
                         <Route path="/Teacher/class/student/attendance/:studentID/:subjectID" element={<StudentAttendance situation="Subject" />} />
                         <Route path="/Teacher/class/student/marks/:studentID/:subjectID" element={<StudentExamMarks situation="Subject" />} />
                         <Route path="/Teacher/subject/assignment/:studentID/:subjectID" element={<AddAssignment situation="Subject" />} />
+                        <Route path="/Teacher/subject/quiz/:studentID/:subjectID" element={<AddQuiz situation="Subject" />} />
                         <Route path="/logout" element={<Logout />} />
                     </Routes>
                 </Box>

@@ -15,7 +15,7 @@ import {
     TextField, CircularProgress, FormControl
 } from '@mui/material';
 
-const AddAssignment = ({ situation }) => {
+const AddQuiz = ({ situation }) => {
     const dispatch = useDispatch();
     const { currentUser, userDetails, loading } = useSelector((state) => state.user);
     const { subjectsList } = useSelector((state) => state.sclass);
@@ -65,7 +65,7 @@ const AddAssignment = ({ situation }) => {
         setChosenSubName(selectedSubject._id);
     }
 
-    const fields = {announcements: { type: 1, title: name, description: description, marks: totalMarks, deadline: dueDate, postedOn: formattedDate  }}
+    const fields = {announcements: { type: 2, title: name, description: description, marks: totalMarks, deadline: dueDate, postedOn: formattedDate  }}
 
     const submitHandler = (event) => {
         event.preventDefault()
@@ -119,7 +119,7 @@ const AddAssignment = ({ situation }) => {
                             <form onSubmit={submitHandler}>
                                 <Stack spacing={3}>
                                     <FormControl>
-                                        <TextField type="" label='Assignment Name'
+                                        <TextField type="" label='Quiz Name'
                                             value={name} required
                                             onChange={(e) => setName(e.target.value)}
                                             InputLabelProps={{
@@ -177,4 +177,4 @@ const AddAssignment = ({ situation }) => {
     );
 }
 
-export default AddAssignment
+export default AddQuiz;

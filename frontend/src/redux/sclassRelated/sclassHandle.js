@@ -97,3 +97,17 @@ export const getSubjectDetails = (id, address) => async (dispatch) => {
         dispatch(getError(error));
     }
 }
+
+export const setAssignment = (id, fields, address) => async (dispatch) => {
+    console.log("This is the assignment: ", id, fields);
+    try {
+        const result = await axios.post(`${process.env.REACT_APP_BASE_URL}/${address}/${id}`, fields, {
+            headers: { 'Content-Type': 'application/json' },
+        });
+        if (result.data) {
+            console.log("Assignment successfully set ", result.data);
+        }
+    } catch (error) {
+        dispatch(getError(error));
+    }
+}

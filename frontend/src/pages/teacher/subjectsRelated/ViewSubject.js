@@ -184,7 +184,7 @@ const ViewSubject = () => {
         </Typography>
         <BlueButton
           variant="contained"
-          onClick={() => navigate("/Admin/subject/quiz/add")}
+          onClick={() => navigate(`/Teacher/subject/quiz/663c74fcd6befc1b04a41588/${subjectID}`)}
         >
           Add Quiz
         </BlueButton>

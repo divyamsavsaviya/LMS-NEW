@@ -71,7 +71,7 @@ const sclassSlice = createSlice({
         resetSubjects: (state) => {
             state.subjectsList = [];
             state.sclassesList = [];
-        },
+        }
     },
 });
 
