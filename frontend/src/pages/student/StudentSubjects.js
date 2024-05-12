@@ -11,7 +11,7 @@ import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
 import InfoIcon from '@mui/icons-material/Info';
-import { Grid } from '@mui/material';
+import { Grid, Button } from '@mui/material';
 import { StyledTableCell, StyledTableRow } from '../../components/styles';
 
 const StudentSubjects = () => {
@@ -46,7 +46,20 @@ const StudentSubjects = () => {
         { title: 'Assignment 1', totalGrade: 100, datePosted: '2022-01-01' },
     ];
     const [selectedSubject, setSelectedSubject] = useState('');
+    const [totalGrade, setTotalGrade] = useState(0);
 
+    // Function to calculate total grade
+    const calculateTotalGrade = () => {
+        const totalAssignmentsGrade = assignments
+            .filter(assignment => assignment.subjectCode === selectedSubject)
+            .reduce((total, assignment) => total + assignment.totalGrade, 0);
+    
+        const totalQuizzesGrade = quizzes
+            .filter(quiz => quiz.subjectCode === selectedSubject)
+            .reduce((total, quiz) => total + quiz.totalGrade, 0);
+    
+        setTotalGrade(totalAssignmentsGrade + totalQuizzesGrade);
+    };
 
     /* const renderTableSection = () => (
         <Table>
@@ -109,54 +122,77 @@ const renderAssignmentsAndQuizzesSection = () => (
                 ))}
             </Select>
         </FormControl>
-        <Typography variant="h6" component="div">Quizzes</Typography>
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="quizzes table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Quiz Title</TableCell>
-                        <TableCell align="right">Total Grade</TableCell>
-                        <TableCell align="right">Date Posted</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {quizzes.filter(quiz => quiz.subjectCode === selectedSubject).map((quiz) => (
-                        <TableRow key={quiz.title}>
-                            <TableCell component="th" scope="row">
-                                {quiz.title}
-                            </TableCell>
-                            <TableCell align="right">{quiz.totalGrade}</TableCell>
-                            <TableCell align="right">{quiz.datePosted}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-        <Typography variant="h6" component="div" style={{ marginTop: 20 }}>Assignments</Typography>
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="assignments table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Assignment Title</TableCell>
-                        <TableCell align="right">Total Grade</TableCell>
-                        <TableCell align="right">Date Posted</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {assignments.filter(assignment => assignment.subjectCode === selectedSubject).map((assignment) => (
-                        <TableRow key={assignment.title}>
-                            <TableCell component="th" scope="row">
-                                {assignment.title}
-                            </TableCell>
-                            <TableCell align="right">{assignment.totalGrade}</TableCell>
-                            <TableCell align="right">{assignment.datePosted}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <Grid container spacing={3}>
+            <Grid item xs={6}>
+                {/* Assignments Table */}
+            </Grid>
+            <Grid item xs={6}>
+                {/* Quizzes Table */}
+            </Grid>
+        </Grid>
+        
+        <Button variant="contained" color="primary" onClick={calculateTotalGrade}>
+            View Grade
+        </Button>
+        <Typography variant="h6" component="h2">
+            Total Grade: {totalGrade}
+        </Typography>
+        <Grid container spacing={3} alignItems="flex-start">
+            <Grid item xs={12} md={6}>
+                <Typography variant="h6" component="div">Quizzes</Typography>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 350 }} aria-label="quizzes table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Quiz Title</TableCell>
+                                <TableCell align="right">Total Grade</TableCell>
+                                <TableCell align="right">Date Posted</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {quizzes.filter(quiz => quiz.subjectCode === selectedSubject).map((quiz) => (
+                                <TableRow key={quiz.title}>
+                                    <TableCell component="th" scope="row">
+                                        {quiz.title}
+                                    </TableCell>
+                                    <TableCell align="right">{quiz.totalGrade}</TableCell>
+                                    <TableCell align="right">{quiz.datePosted}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+                <Typography variant="h6" component="div" style={{ marginTop: 0 }}>Assignments</Typography>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 350 }} aria-label="assignments table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Assignment Title</TableCell>
+                                <TableCell align="right">Total Grade</TableCell>
+                                <TableCell align="right">Date Posted</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {assignments.filter(assignment => assignment.subjectCode === selectedSubject).map((assignment) => (
+                                <TableRow key={assignment.title}>
+                                    <TableCell component="th" scope="row">
+                                        {assignment.title}
+                                    </TableCell>
+                                    <TableCell align="right">{assignment.totalGrade}</TableCell>
+                                    <TableCell align="right">{assignment.datePosted}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Grid>
+        </Grid>
     </Container>
 );
+
 
 /* Announcements */
 
