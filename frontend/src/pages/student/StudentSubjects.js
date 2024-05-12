@@ -1,142 +1,199 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSubjectList } from '../../redux/sclassRelated/sclassHandle';
-import { BottomNavigation, BottomNavigationAction, Container, Paper, Table, TableBody, TableHead, Typography } from '@mui/material';
 import { getUserDetails } from '../../redux/userRelated/userHandle';
-import CustomBarChart from '../../components/CustomBarChart'
+import { Paper, BottomNavigation, BottomNavigationAction, Container, Table, TableBody, Typography, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import CustomBarChart from '../../components/CustomBarChart';
+import { FormControl, MenuItem, Select, InputLabel } from '@mui/material';
 
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
+import InfoIcon from '@mui/icons-material/Info';
+import { Grid } from '@mui/material';
 import { StyledTableCell, StyledTableRow } from '../../components/styles';
 
 const StudentSubjects = () => {
-
     const dispatch = useDispatch();
     const { subjectsList, sclassDetails } = useSelector((state) => state.sclass);
-    const { userDetails, currentUser, loading, response, error } = useSelector((state) => state.user);
+    const { userDetails, currentUser, loading } = useSelector((state) => state.user);
 
     useEffect(() => {
         dispatch(getUserDetails(currentUser._id, "Student"));
-    }, [dispatch, currentUser._id])
-
-    if (response) { console.log(response) }
-    else if (error) { console.log(error) }
+        dispatch(getSubjectList(currentUser.sclassName._id, "ClassSubjects"));
+    }, [dispatch, currentUser._id, currentUser.sclassName._id]);
 
     const [subjectMarks, setSubjectMarks] = useState([]);
-    const [selectedSection, setSelectedSection] = useState('table');
+    const [selectedSection, setSelectedSection] = useState('details');
 
     useEffect(() => {
-        if (userDetails) {
-            setSubjectMarks(userDetails.examResult || []);
+        if (userDetails && userDetails.examResult) {
+            setSubjectMarks(userDetails.examResult);
         }
-    }, [userDetails])
-
-    useEffect(() => {
-        if (subjectMarks === []) {
-            dispatch(getSubjectList(currentUser.sclassName._id, "ClassSubjects"));
-        }
-    }, [subjectMarks, dispatch, currentUser.sclassName._id]);
+    }, [userDetails]);
 
     const handleSectionChange = (event, newSection) => {
         setSelectedSection(newSection);
     };
 
-    const renderTableSection = () => {
-        return (
-            <>
-                <Typography variant="h4" align="center" gutterBottom>
-                    Subject Marks
-                </Typography>
-                <Table>
-                    <TableHead>
-                        <StyledTableRow>
-                            <StyledTableCell>Subject</StyledTableCell>
-                            <StyledTableCell>Marks</StyledTableCell>
+    const quizzes = [
+        { title: 'Quiz 1', totalGrade: 100, datePosted: '2022-01-01' },
+        // More quizzes...
+      ];
+
+      const assignments = [
+        { title: 'Assignment 1', totalGrade: 100, datePosted: '2022-01-01' },
+    ];
+    const [selectedSubject, setSelectedSubject] = useState('');
+
+
+    /* const renderTableSection = () => (
+        <Table>
+            <TableHead>
+                <StyledTableRow>
+                    <StyledTableCell>Subject</StyledTableCell>
+                    <StyledTableCell>Marks</StyledTableCell>
+                </StyledTableRow>
+            </TableHead>
+            <TableBody>
+                {subjectMarks.map((result, index) => (
+                    result.subName && result.marksObtained && (
+                        <StyledTableRow key={index}>
+                            <StyledTableCell>{result.subName.subName}</StyledTableCell>
+                            <StyledTableCell>{result.marksObtained}</StyledTableCell>
                         </StyledTableRow>
-                    </TableHead>
-                    <TableBody>
-                        {subjectMarks.map((result, index) => {
-                            if (!result.subName || !result.marksObtained) {
-                                return null;
-                            }
-                            return (
-                                <StyledTableRow key={index}>
-                                    <StyledTableCell>{result.subName.subName}</StyledTableCell>
-                                    <StyledTableCell>{result.marksObtained}</StyledTableCell>
-                                </StyledTableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </>
-        );
-    };
+                    )
+                ))}
+            </TableBody>
+        </Table>
+    ); */
 
-    const renderChartSection = () => {
-        return <CustomBarChart chartData={subjectMarks} dataKey="marksObtained" />;
-    };
+    const renderChartSection = () => (
+        <CustomBarChart chartData={subjectMarks} dataKey="marksObtained" />
+    );
+/* Details Tab  */
+    const renderClassDetailsSection = () => (
+        <Container>
+            <Typography variant="h4" align="center">Class Details</Typography>
+            <Typography variant="h5">
+                You are currently in Class {sclassDetails && sclassDetails.sclassName}
+            </Typography>
+            <Typography variant="h6">
+                And these are the subjects:
+            </Typography>
+            {subjectsList.map((subject, index) => (
+                <Typography variant="subtitle1" key={index}>
+                    {subject.subName} ({subject.subCode})
+                </Typography>
+            ))}
+        </Container>
+    );
 
-    const renderClassDetailsSection = () => {
-        return (
-            <Container>
-                <Typography variant="h4" align="center" gutterBottom>
-                    Class Details
-                </Typography>
-                <Typography variant="h5" gutterBottom>
-                    You are currently in Class {sclassDetails && sclassDetails.sclassName}
-                </Typography>
-                <Typography variant="h6" gutterBottom>
-                    And these are the subjects:
-                </Typography>
-                {subjectsList &&
-                    subjectsList.map((subject, index) => (
-                        <div key={index}>
-                            <Typography variant="subtitle1">
-                                {subject.subName} ({subject.subCode})
-                            </Typography>
-                        </div>
+/* Assignments and Quizzes  */
+const renderAssignmentsAndQuizzesSection = () => (
+    <Container>
+        <FormControl fullWidth style={{ margin: '20px 0' }}>
+            <InputLabel id="select-subject-label">Choose Subject</InputLabel>
+            <Select
+                labelId="select-subject-label"
+                id="select-subject"
+                value={selectedSubject}
+                label="Choose Subject"
+                onChange={e => setSelectedSubject(e.target.value)}
+            >
+                {subjectsList.map((subject, index) => (
+                    <MenuItem key={index} value={subject.subCode}>
+                        {subject.subName}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
+        <Typography variant="h6" component="div">Quizzes</Typography>
+        <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="quizzes table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Quiz Title</TableCell>
+                        <TableCell align="right">Total Grade</TableCell>
+                        <TableCell align="right">Date Posted</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {quizzes.filter(quiz => quiz.subjectCode === selectedSubject).map((quiz) => (
+                        <TableRow key={quiz.title}>
+                            <TableCell component="th" scope="row">
+                                {quiz.title}
+                            </TableCell>
+                            <TableCell align="right">{quiz.totalGrade}</TableCell>
+                            <TableCell align="right">{quiz.datePosted}</TableCell>
+                        </TableRow>
                     ))}
-            </Container>
-        );
-    };
+                </TableBody>
+            </Table>
+        </TableContainer>
+        <Typography variant="h6" component="div" style={{ marginTop: 20 }}>Assignments</Typography>
+        <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="assignments table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Assignment Title</TableCell>
+                        <TableCell align="right">Total Grade</TableCell>
+                        <TableCell align="right">Date Posted</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {assignments.filter(assignment => assignment.subjectCode === selectedSubject).map((assignment) => (
+                        <TableRow key={assignment.title}>
+                            <TableCell component="th" scope="row">
+                                {assignment.title}
+                            </TableCell>
+                            <TableCell align="right">{assignment.totalGrade}</TableCell>
+                            <TableCell align="right">{assignment.datePosted}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    </Container>
+);
+
+/* Announcements */
 
     return (
-        <>
+        <div>
             {loading ? (
-                <div>Loading...</div>
+                <Typography>Loading...</Typography>
             ) : (
-                <div>
-                    {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0
-                        ?
-                        (<>
-                            {selectedSection === 'table' && renderTableSection()}
-                            {selectedSection === 'chart' && renderChartSection()}
+                <>
+                    <Paper elevation={3}>
+                        <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
+                        <BottomNavigationAction
+                                label="Details"
+                                value="details"
+                                
+                            />
 
-                            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-                                <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
-                                    <BottomNavigationAction
-                                        label="Table"
-                                        value="table"
-                                        icon={selectedSection === 'table' ? <TableChartIcon /> : <TableChartOutlinedIcon />}
-                                    />
-                                    <BottomNavigationAction
-                                        label="Chart"
-                                        value="chart"
-                                        icon={selectedSection === 'chart' ? <InsertChartIcon /> : <InsertChartOutlinedIcon />}
-                                    />
-                                </BottomNavigation>
-                            </Paper>
-                        </>)
-                        :
-                        (<>
-                            {renderClassDetailsSection()}
-                        </>)
-                    }
-                </div>
+                            <BottomNavigationAction
+                                label="Quizzes&Assignments"
+                                value="Quizzes/Assignments"
+                                
+                            />
+
+                                <BottomNavigationAction
+                                label="Announcements"
+                                value="Announcements"
+                                
+                            />
+                            
+                        </BottomNavigation>
+                    </Paper>
+                    {/* {selectedSection === 'table' && renderTableSection()} */}
+                    {selectedSection === 'Quizzes/Assignments' && renderAssignmentsAndQuizzesSection()}
+                    {selectedSection === 'details' && renderClassDetailsSection()}
+                </>
             )}
-        </>
+        </div>
     );
 };
 

@@ -57,13 +57,6 @@ const ViewSubject = () => {
     };
   })
 
-
-  /* adding assignment inputs */
-
-
-
-
-  
   const StudentsAttendanceButtonHaver = ({ row }) => {
     return (
       <>
@@ -79,7 +72,7 @@ const ViewSubject = () => {
             navigate(`/Admin/subject/student/attendance/${row.id}/${subjectID}`)
           }
         >
-          Mark-Quizzes
+          Take Attendance
         </PurpleButton>
       </>
     );
