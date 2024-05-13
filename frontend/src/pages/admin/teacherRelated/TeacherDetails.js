@@ -39,22 +39,12 @@ const TeacherDetails = () => {
                         Teacher Name: {teacherDetails?.name}
                     </Typography>
                     <Typography variant="h6" gutterBottom>
-                        Class Name: {teacherDetails?.teachSclass?.sclassName}
+                        Email : {teacherDetails?.email}
                     </Typography>
-                    {isSubjectNamePresent ? (
-                        <>
-                            <Typography variant="h6" gutterBottom>
-                                Subject Name: {teacherDetails?.teachSubject?.subName}
-                            </Typography>
-                            <Typography variant="h6" gutterBottom>
-                                Subject Sessions: {teacherDetails?.teachSubject?.sessions}
-                            </Typography>
-                        </>
-                    ) : (
-                        <Button variant="contained" onClick={handleAddSubject}>
-                            Add Subject
-                        </Button>
-                    )}
+                    <Typography variant="h6" gutterBottom>
+                        Subject Name: {teacherDetails?.teachSubject[0]?.subName}
+                    </Typography>
+                    
                 </Container>
             )}
         </>

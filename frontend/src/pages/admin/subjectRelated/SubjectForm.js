@@ -147,27 +147,7 @@ const SubjectForm = () => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={6}>
-                            <Box display="flex" alignItems="flex-end">
-                                {index === 0 ? (
-                                    <Button
-                                        variant="outlined"
-                                        color="primary"
-                                        onClick={handleAddSubject}
-                                    >
-                                        Add Subject -123
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        variant="outlined"
-                                        color="error"
-                                        onClick={handleRemoveSubject(index)}
-                                    >
-                                        Remove
-                                    </Button>
-                                )}
-                            </Box>
-                        </Grid>
+                        
                     </React.Fragment>
                 ))}
                 <Grid item xs={12}>
