@@ -346,7 +346,7 @@ const ViewStudent = () => {
                 <br />
                 Roll Number: {userDetails.rollNum}
                 <br />
-                Class: {sclassName.sclassName}
+                Semester: {sclassName.sclassName}
                 <br />
                 School: {studentSchool.schoolName}
                 {
@@ -354,9 +354,6 @@ const ViewStudent = () => {
                         <CustomPieChart data={chartData} />
                     )
                 }
-                <Button variant="contained" sx={styles.styledButton} onClick={deleteHandler}>
-                    Delete
-                </Button>
                 <br />
                 {/* <Button variant="contained" sx={styles.styledButton} className="show-tab" onClick={() => { setShowTab(!showTab) }}>
                     {

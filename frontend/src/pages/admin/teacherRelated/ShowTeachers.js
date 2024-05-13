@@ -57,17 +57,22 @@ const ShowTeachers = () => {
 
     const columns = [
         { id: 'name', label: 'Name', minWidth: 170 },
-        { id: 'teachSubject', label: 'Subject', minWidth: 100 },
-        { id: 'teachSclass', label: 'Class', minWidth: 170 },
+        { id: 'teachSclass', label: 'Semester', minWidth: 170 },
+        { id: 'email', label: 'Email', minWidth: 170 },
+        { id: 'courseTaught', label: 'Course', minWidth: 170 },
     ];
 
     const rows = teachersList.map((teacher) => {
+        console.log(teacher);
         return {
             name: teacher.name,
             teachSubject: teacher.teachSubject?.subName || null,
             teachSclass: teacher.teachSclass.sclassName,
             teachSclassID: teacher.teachSclass._id,
             id: teacher._id,
+            email: teacher.email,
+            courseTaught : teacher.teachSubject ? teacher.teachSubject[0].subName : "No Subject Assigned"
+
         };
     });
 
@@ -75,10 +80,6 @@ const ShowTeachers = () => {
         {
             icon: <PersonAddAlt1Icon color="primary" />, name: 'Add New Teacher',
             action: () => navigate("/Admin/teachers/chooseclass")
-        },
-        {
-            icon: <PersonRemoveIcon color="error" />, name: 'Delete All Teachers',
-            action: () => deleteHandler(currentUser._id, "Teachers")
         },
     ];
 
@@ -133,9 +134,6 @@ const ShowTeachers = () => {
                                             );
                                         })}
                                         <StyledTableCell align="center">
-                                            <IconButton onClick={() => deleteHandler(row.id, "Teacher")}>
-                                                <PersonRemoveIcon color="error" />
-                                            </IconButton>
                                             <BlueButton variant="contained"
                                                 onClick={() => navigate("/Admin/teachers/teacher/" + row.id)}>
                                                 View
