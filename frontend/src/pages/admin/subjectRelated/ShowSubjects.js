@@ -43,7 +43,7 @@ const ShowSubjects = () => {
     }
 
     const subjectColumns = [
-        { id: 'subName', label: 'Sub Name', minWidth: 170 },
+        { id: 'subName', label: 'Course Name', minWidth: 170 },
         { id: 'sclassName', label: 'Semester', minWidth: 170 },
         { id: 'teacherName', label: 'Teacher', minWidth: 170 }, // Added teacherName column
     ];
@@ -53,7 +53,7 @@ const ShowSubjects = () => {
             subName: subject.subName,
             sessions: subject.sessions,
             sclassName: subject.sclassName.sclassName,
-            teacherName: subject.teacherName, // Added teacherName property
+            teacherName: subject.teacher ? subject.teacher.name : "Not Assigned", // Added teacherName property
             sclassID: subject.sclassName._id,
             id: subject._id,
         };
