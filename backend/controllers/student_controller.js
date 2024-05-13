@@ -4,45 +4,35 @@ const Subject = require("../models/subjectSchema.js");
 
 const studentRegister = async (req, res) => {
   try {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPass = await bcrypt.hash(req.body.password, salt);
+      const salt = await bcrypt.genSalt(10);
+      const hashedPass = await bcrypt.hash(req.body.password, salt);
 
-    const existingStudent = await Student.findOne({
-      rollNum: req.body.rollNum,
-      school: req.body.adminID,
-      // sclassName: req.body.sclassName,
-    });
+      const existingStudent = await Student.findOne({
+          rollNum: req.body.rollNum,
+          school: req.body.adminID,
+          sclassName: req.body.sclassName,
+      });
 
-    if (existingStudent) {
-      const result = await Student.findByIdAndUpdate(
-        existingStudent._id,
-        {
-          $push: { subjects: { subName: req.body.subName } },
-        },
-        { new: true }
-      );
-      res.send(result);
-    } else {
-      const payload = {
-        ...req.body,
-        school: req.body.adminID,
-        password: hashedPass,
-      };
-
-      if (req.body?.subName.length > 0) {
-        payload["subjects"] = [{ subName: req.body.subName }];
+      if (existingStudent) {
+          res.send({ message: 'Roll Number already exists' });
       }
-      const student = new Student(payload);
+      else {
+          const student = new Student({
+              ...req.body,
+              school: req.body.adminID,
+              password: hashedPass
+          });
 
-      let result = await student.save();
+          let result = await student.save();
 
-      result.password = undefined;
-      res.send(result);
-    }
+          result.password = undefined;
+          res.send(result);
+      }
   } catch (err) {
-    res.status(500).json(err);
+      res.status(500).json(err);
   }
 };
+
 
 const studentLogIn = async (req, res) => {
   try {
