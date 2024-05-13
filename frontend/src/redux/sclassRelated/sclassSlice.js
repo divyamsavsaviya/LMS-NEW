@@ -71,7 +71,27 @@ const sclassSlice = createSlice({
         resetSubjects: (state) => {
             state.subjectsList = [];
             state.sclassesList = [];
-        }
+        },
+
+        setAssignmentSuccess: (state, action) => {
+            state.loading = false;
+            state.response = action.payload; // Assuming payload is the successful response data
+            state.error = null;
+        },
+        setAssignmentFailure: (state, action) => {
+            state.loading = false;
+            state.error = action.payload; // Error object
+        },
+
+        setQuizSuccess: (state, action) => {
+            state.loading = false;
+            state.response = action.payload; // Assuming payload is the successful response data
+            state.error = null;
+        },
+        setQuizFailure: (state, action) => {
+            state.loading = false;
+            state.error = action.payload; // Error object
+        },
     },
 });
 
@@ -86,6 +106,10 @@ export const {
     getFailedTwo,
     resetSubjects,
     getSubDetailsSuccess,
+    setAssignmentSuccess,
+    setAssignmentFailure,
+    setQuizSuccess,
+    setQuizFailure,
     getSubDetailsRequest
 } = sclassSlice.actions;
 

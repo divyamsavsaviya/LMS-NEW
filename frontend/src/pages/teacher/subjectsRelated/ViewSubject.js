@@ -8,8 +8,8 @@ import TableTemplate from '../../../components/TableTemplate';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button } from '@mui/material';
-
+/* import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button } from '@mui/material'; */
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import TableChartIcon from '@mui/icons-material/TableChart';
@@ -96,7 +96,7 @@ const ViewSubject = () => {
         </BlueButton>
         <PurpleButton variant="contained"
           onClick={() => navigate(`/Admin/subject/student/marks/${row.id}/${subjectID}`)}>
-          Provide Marks
+          Mark Assignments
         </PurpleButton>
       </>
     );
@@ -225,12 +225,12 @@ const ViewSubject = () => {
             <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
               <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
                 <BottomNavigationAction
-                  label="Attendance"
+                  label="Quizzes"
                   value="attendance"
                   icon={selectedSection === 'attendance' ? <TableChartIcon /> : <TableChartOutlinedIcon />}
                 />
                 <BottomNavigationAction
-                  label="Marks"
+                  label="Assignments"
                   value="marks"
                   icon={selectedSection === 'marks' ? <InsertChartIcon /> : <InsertChartOutlinedIcon />}
                 />
@@ -251,36 +251,57 @@ const ViewSubject = () => {
         <Typography variant="h4" align="center" gutterBottom>
           Subject Details
         </Typography>
-        <Typography variant="h6" gutterBottom>
-          Subject Name : {subjectDetails && subjectDetails.subName}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Subject Code : {subjectDetails && subjectDetails.subCode}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Subject Sessions : {subjectDetails && subjectDetails.sessions}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Number of Students: {numberOfStudents}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Class Name : {subjectDetails && subjectDetails.sclassName && subjectDetails.sclassName.sclassName}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Course Description : {subjectDetails && subjectDetails.courseDescription}
-        </Typography>
-        {subjectDetails && subjectDetails.teacher ? (
-          <Typography variant="h6" gutterBottom>
-            Teacher Name : {subjectDetails.teacher.name}
-          </Typography>
-        ) : (
-          <GreenButton
-            variant="contained"
-            onClick={() => navigate("/Admin/teachers/addteacher/" + subjectDetails._id)}
-          >
-            Add Subject Teacher
-          </GreenButton>
-        )}
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Detail</TableCell>
+                <TableCell>Value</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>Subject Name</TableCell>
+                <TableCell>{subjectDetails && subjectDetails.subName}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Subject Code</TableCell>
+                <TableCell>{subjectDetails && subjectDetails.subCode}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Subject Sessions</TableCell>
+                <TableCell>{subjectDetails && subjectDetails.sessions}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Number of Students</TableCell>
+                <TableCell>{numberOfStudents}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Class Name</TableCell>
+                <TableCell>{subjectDetails && subjectDetails.sclassName && subjectDetails.sclassName.sclassName}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Course Description</TableCell>
+                <TableCell>{subjectDetails && subjectDetails.courseDescription}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Teacher Name</TableCell>
+                <TableCell>
+                  {subjectDetails && subjectDetails.teacher ? (
+                    subjectDetails.teacher.name
+                  ) : (
+                    <GreenButton
+                      variant="contained"
+                      onClick={() => navigate("/Admin/teachers/addteacher/" + subjectDetails._id)}
+                    >
+                      Add Subject Teacher
+                    </GreenButton>
+                  )}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </>
     );
   };

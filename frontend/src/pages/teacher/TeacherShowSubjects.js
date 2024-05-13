@@ -46,7 +46,7 @@ const ShowSubjects = () => {
     const subjectColumns = [
         { id: 'subName', label: 'Sub Name', minWidth: 170 },
         { id: 'sclassName', label: 'Semester', minWidth: 170 },
-        { id: 'teacherName', label: 'Teacher', minWidth: 170 }, // Added teacherName column
+         // Added teacherName column
     ];
 
     const subjectRows = subjectsList.map((subject) => {

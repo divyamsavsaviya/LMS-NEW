@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { getUserDetails } from '../../../redux/userRelated/userHandle';
 import { getSubjectList } from '../../../redux/sclassRelated/sclassHandle';
 import { updateStudentFields } from '../../../redux/studentRelated/studentHandle';
-import { setAssignment } from '../../../redux/sclassRelated/sclassHandle';
+import { setQuiz } from '../../../redux/sclassRelated/sclassHandle';
 
 import Popup from '../../../components/Popup';
 import { BlueButton } from '../../../components/buttonStyles';
@@ -70,7 +70,7 @@ const AddQuiz = ({ situation }) => {
     const submitHandler = (event) => {
         event.preventDefault()
         setLoader(true)
-        dispatch(setAssignment(chosenSubName, fields, "SetAnnouncement"));
+        dispatch(setQuiz(chosenSubName, fields, "SetAnnouncement"));
     }
 
     useEffect(() => {
@@ -116,6 +116,9 @@ const AddQuiz = ({ situation }) => {
                                 width: '100%'
                             }}
                         >
+                            <Typography variant="h4" component="h2" gutterBottom>
+                            Post a Quiz
+                            </Typography>
                             <form onSubmit={submitHandler}>
                                 <Stack spacing={3}>
                                     <FormControl>
@@ -165,7 +168,7 @@ const AddQuiz = ({ situation }) => {
                                     type="submit"
                                     disabled={loader}
                                 >
-                                    {loader ? <CircularProgress size={24} color="inherit" /> : "Submit"}
+                                    {loader ? <CircularProgress size={24} color="inherit" /> : "Post Quiz"}
                                 </BlueButton>
                             </form>
                         </Box>

@@ -108,6 +108,7 @@ const AddAssignment = ({ situation }) => {
                             justifyContent: 'center'
                         }}
                     >
+                        
                         <Box
                             sx={{
                                 maxWidth: 550,
@@ -116,10 +117,14 @@ const AddAssignment = ({ situation }) => {
                                 width: '100%'
                             }}
                         >
+                            
+                            <Typography variant="h4" component="h2" gutterBottom>
+                            Post an Assignment
+                            </Typography>
                             <form onSubmit={submitHandler}>
                                 <Stack spacing={3}>
                                     <FormControl>
-                                        <TextField type="" label='Assignment Name'
+                                        <TextField type="" label='Assignment Title'
                                             value={name} required
                                             onChange={(e) => setName(e.target.value)}
                                             InputLabelProps={{
@@ -128,7 +133,7 @@ const AddAssignment = ({ situation }) => {
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <TextField type="number" label='Enter marks'
+                                        <TextField type="number" label='Enter Total Grade'
                                             value={totalMarks} required
                                             onChange={(e) => setTotalMarks(e.target.value)}
                                             InputLabelProps={{
@@ -165,7 +170,7 @@ const AddAssignment = ({ situation }) => {
                                     type="submit"
                                     disabled={loader}
                                 >
-                                    {loader ? <CircularProgress size={24} color="inherit" /> : "Submit"}
+                                    {loader ? <CircularProgress size={24} color="inherit" /> : "Post Assignment"}
                                 </BlueButton>
                             </form>
                         </Box>

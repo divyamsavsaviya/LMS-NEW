@@ -9,6 +9,10 @@ import {
     getFailedTwo,
     getSubjectsSuccess,
     getSubDetailsSuccess,
+    setAssignmentSuccess,
+    setAssignmentFailure,
+    setQuizSuccess,
+    setQuizFailure,
     getSubDetailsRequest
 } from './sclassSlice';
 
@@ -98,16 +102,42 @@ export const getSubjectDetails = (id, address) => async (dispatch) => {
     }
 }
 
-export const setAssignment = (id, fields, address) => async (dispatch) => {
-    console.log("This is the assignment: ", id, fields);
+export const setQuiz = (id, fields, address) => async (dispatch) => {
+    dispatch(getRequest()); // Indicate loading state
     try {
-        const result = await axios.post(`${process.env.REACT_APP_BASE_URL}/${address}/${id}`, fields, {
-            headers: { 'Content-Type': 'application/json' },
+        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/${address}/${id}`, fields, {
+            headers: { 'Content-Type': 'application/json' }
         });
-        if (result.data) {
-            console.log("Assignment successfully set ", result.data);
+        // Handle response based on its structure
+        if (response.data) {
+            dispatch(setQuizSuccess(response.data));
+            return Promise.resolve(response.data); // Ensuring this thunk returns a promise
         }
     } catch (error) {
-        dispatch(getError(error));
+        console.error("Failed to post the quiz", error);
+        dispatch(setQuizFailure(error));
+        dispatch(getError(error)); // Optionally maintain a general error as well
+        return Promise.reject(error); // Returning a rejected promise
     }
-}
+    
+};
+
+export const setAssignment = (id, fields, address) => async (dispatch) => {
+    dispatch(getRequest()); // Indicate loading state
+    try {
+        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/${address}/${id}`, fields, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        // Handle response based on its structure
+        if (response.data) {
+            dispatch(setAssignmentSuccess(response.data));
+            return Promise.resolve(response.data); // Ensuring this thunk returns a promise
+        }
+    } catch (error) {
+        console.error("Failed to post the assignment", error);
+        dispatch(setAssignmentFailure(error));
+        dispatch(getError(error)); // Optionally maintain a general error as well
+        return Promise.reject(error); // Returning a rejected promise
+    }
+    
+};

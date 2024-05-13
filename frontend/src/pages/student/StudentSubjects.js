@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSubjectList } from '../../redux/sclassRelated/sclassHandle';
+import { getClassDetails, getSubjectList } from '../../redux/sclassRelated/sclassHandle';
 import { getUserDetails } from '../../redux/userRelated/userHandle';
 import { Paper, BottomNavigation, BottomNavigationAction, Container, Table, TableBody, Typography, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import CustomBarChart from '../../components/CustomBarChart';
@@ -86,22 +86,33 @@ const StudentSubjects = () => {
         <CustomBarChart chartData={subjectMarks} dataKey="marksObtained" />
     );
 /* Details Tab  */
-    const renderClassDetailsSection = () => (
-        <Container>
-            <Typography variant="h4" align="center">Class Details</Typography>
-            <Typography variant="h5">
-                You are currently in Class {sclassDetails && sclassDetails.sclassName}
-            </Typography>
-            <Typography variant="h6">
-                And these are the subjects:
-            </Typography>
-            {subjectsList.map((subject, index) => (
-                <Typography variant="subtitle1" key={index}>
-                    {subject.subName} ({subject.subCode})
-                </Typography>
-            ))}
-        </Container>
-    );
+const renderClassDetailsSection = () => (
+    <Container>
+        <Typography variant="h4" align="center">Class Details</Typography>
+        <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="class details table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Semester Name</TableCell>
+                        <TableCell>Subject Name</TableCell>
+                        <TableCell>Subject Code</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {subjectsList.map((subject, index) => (
+                        <TableRow key={index}>
+                        <TableCell component="th" scope="row">
+                            Fall 2024
+                            </TableCell>
+                            <TableCell>{subject.subName}</TableCell>
+                            <TableCell>{subject.subCode}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    </Container>
+);
 
 /* Assignments and Quizzes  */
 const renderAssignmentsAndQuizzesSection = () => (
