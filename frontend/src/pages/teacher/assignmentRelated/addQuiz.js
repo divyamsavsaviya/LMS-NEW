@@ -5,9 +5,10 @@ import { getUserDetails } from '../../../redux/userRelated/userHandle';
 import { getSubjectList } from '../../../redux/sclassRelated/sclassHandle';
 import { updateStudentFields } from '../../../redux/studentRelated/studentHandle';
 import { setQuiz } from '../../../redux/sclassRelated/sclassHandle';
-
+import Alert from '@mui/material/Alert';
 import Popup from '../../../components/Popup';
 import { BlueButton } from '../../../components/buttonStyles';
+import CheckIcon from '@mui/icons-material/Check';
 import {
     Box, InputLabel,
     MenuItem, Select,
@@ -29,10 +30,11 @@ const AddQuiz = ({ situation }) => {
     const [totalMarks, setTotalMarks] = useState("");
     const [description, setDescription] = useState("");
     const [dueDate, setDueDate] = useState("");
-
+   
     const [showPopup, setShowPopup] = useState(false);
     const [message, setMessage] = useState("");
     const [loader, setLoader] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     const currentDate = new Date();
     const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
@@ -48,6 +50,9 @@ const AddQuiz = ({ situation }) => {
             setStudentID(studentID);
             dispatch(getUserDetails(studentID, "Student"));
             setChosenSubName(subjectID);
+        } else if (situation === "Teacher") {
+    
+            setChosenSubName(params.id);
         }
     }, [situation]);
 
@@ -71,6 +76,8 @@ const AddQuiz = ({ situation }) => {
         event.preventDefault()
         setLoader(true)
         dispatch(setQuiz(chosenSubName, fields, "SetAnnouncement"));
+        setLoader(false)
+        setSuccess(true);
     }
 
     useEffect(() => {
@@ -171,6 +178,9 @@ const AddQuiz = ({ situation }) => {
                                     {loader ? <CircularProgress size={24} color="inherit" /> : "Post Quiz"}
                                 </BlueButton>
                             </form>
+                            {success ? <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+      Assignment has been posted sucessfully
+    </Alert>:""}
                         </Box>
                     </Box>
                     <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />

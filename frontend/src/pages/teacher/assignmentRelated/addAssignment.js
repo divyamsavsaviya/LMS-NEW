@@ -40,8 +40,9 @@ const AddAssignment = ({ situation }) => {
 
     const currentDate = new Date();
     const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
-
+ 
     useEffect(() => {
+    
         if (situation === "Student") {
             setStudentID(params.id);
             const stdID = params.id
@@ -52,6 +53,12 @@ const AddAssignment = ({ situation }) => {
             setStudentID(studentID);
             dispatch(getUserDetails(studentID, "Student"));
             setChosenSubName(subjectID);
+        }else if(situation === "Teacher"){
+            const subjectId = params.id;
+            console.log("subjectid ",subjectId);
+
+            setChosenSubName(subjectId);
+
         }
     }, [situation]);
 
@@ -74,6 +81,8 @@ const AddAssignment = ({ situation }) => {
     const submitHandler = (event) => {
         event.preventDefault()
         setLoader(true)
+        console.log("choosen sbject name : ",chosenSubName)
+        
         dispatch(setAssignment(chosenSubName, fields, "SetAnnouncement"));
         setLoader(false)
         setSuccess(true);

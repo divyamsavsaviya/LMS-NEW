@@ -125,6 +125,8 @@ export const setQuiz = (id, fields, address) => async (dispatch) => {
 export const setAssignment = (id, fields, address) => async (dispatch) => {
     dispatch(getRequest()); // Indicate loading state
     try {
+
+        console.log(`${process.env.REACT_APP_BASE_URL}/${address}/${id}`)
         const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/${address}/${id}`, fields, {
             headers: { 'Content-Type': 'application/json' }
         });
