@@ -218,10 +218,10 @@ const ClassDetails = () => {
         return (
             <>
                 <Typography variant="h4" align="center" gutterBottom>
-                    Class Details
+                    Semester Details
                 </Typography>
                 <Typography variant="h5" gutterBottom>
-                    This is Class {sclassDetails && sclassDetails.sclassName}
+                    Semester : {sclassDetails && sclassDetails.sclassName}
                 </Typography>
                 <Typography variant="h6" gutterBottom>
                     Number of Subjects: {numberOfSubjects}
@@ -229,7 +229,7 @@ const ClassDetails = () => {
                 <Typography variant="h6" gutterBottom>
                     Number of Students: {numberOfStudents}
                 </Typography>
-                {getresponse &&
+                {/* {getresponse &&
                     <GreenButton
                         variant="contained"
                         onClick={() => navigate("/Admin/class/addstudents/" + classID)}
@@ -244,7 +244,7 @@ const ClassDetails = () => {
                     >
                         Add Subjects
                     </GreenButton>
-                }
+                } */}
             </>
         );
     }
