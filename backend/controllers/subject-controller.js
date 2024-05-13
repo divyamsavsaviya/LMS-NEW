@@ -202,16 +202,22 @@ const setSyallabus = async (req, res) => {
 
 const setAnnouncement = async (req, res) => {
   try {
-    const result = await Subject.findByIdAndUpdate(
-      req.params.id,
-      {
-        announcements: req.body.announcements,
-      },
-      { new: true }
-    );
-    return res.send(result);
+
+
+    const result = await Subject.findById(req.params.id);
+
+    let data =[]
+    data = result.announcements;
+    data.push(req.body.announcements)
+
+    result.announcements = data
+
+
+    await result.save()
+
+    return res.status(200);
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };
 

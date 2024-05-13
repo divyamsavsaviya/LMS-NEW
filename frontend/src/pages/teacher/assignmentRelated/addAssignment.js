@@ -5,6 +5,7 @@ import { getUserDetails } from '../../../redux/userRelated/userHandle';
 import { getSubjectList } from '../../../redux/sclassRelated/sclassHandle';
 import { updateStudentFields } from '../../../redux/studentRelated/studentHandle';
 import { setAssignment } from '../../../redux/sclassRelated/sclassHandle';
+import Alert from '@mui/material/Alert';
 
 import Popup from '../../../components/Popup';
 import { BlueButton } from '../../../components/buttonStyles';
@@ -14,6 +15,7 @@ import {
     Typography, Stack,
     TextField, CircularProgress, FormControl
 } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
 
 const AddAssignment = ({ situation }) => {
     const dispatch = useDispatch();
@@ -21,7 +23,7 @@ const AddAssignment = ({ situation }) => {
     const { subjectsList } = useSelector((state) => state.sclass);
     const { response, error, statestatus } = useSelector((state) => state.student);
     const params = useParams()
-
+   
     const [studentID, setStudentID] = useState("");
     const [subjectName, setSubjectName] = useState("");
     const [chosenSubName, setChosenSubName] = useState("");
@@ -33,6 +35,8 @@ const AddAssignment = ({ situation }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [message, setMessage] = useState("");
     const [loader, setLoader] = useState(false);
+
+    const [success, setSuccess] = useState(false);
 
     const currentDate = new Date();
     const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
@@ -71,6 +75,10 @@ const AddAssignment = ({ situation }) => {
         event.preventDefault()
         setLoader(true)
         dispatch(setAssignment(chosenSubName, fields, "SetAnnouncement"));
+        setLoader(false)
+        setSuccess(true);
+       
+
     }
 
     useEffect(() => {
@@ -173,6 +181,9 @@ const AddAssignment = ({ situation }) => {
                                     {loader ? <CircularProgress size={24} color="inherit" /> : "Post Assignment"}
                                 </BlueButton>
                             </form>
+                            {success ? <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+      Assignment has been posted sucessfully
+    </Alert>:""}
                         </Box>
                     </Box>
                     <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />

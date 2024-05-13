@@ -62,6 +62,8 @@ const {
   deleteTeacher,
   updateTeacherSubject,
   teacherAttendance,
+  fetchAssignments,
+  fetchQuiz
 } = require("../controllers/teacher-controller.js");
 
 // Admin
@@ -113,6 +115,11 @@ router.delete("/Teacher/:id", deleteTeacher);
 router.put("/TeacherSubject", updateTeacherSubject);
 
 router.post("/TeacherAttendance/:id", teacherAttendance);
+
+
+
+router.get("/assignments/:id", fetchAssignments);
+router.get("/quiz/:id", fetchQuiz);
 
 // Notice
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyledTableCell, StyledTableRow } from './styles';
 import { Table, TableBody, TableContainer, TableHead, TablePagination } from '@mui/material';
 
-const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
+const TableTemplateAssignment = ({ buttonHaver: ButtonHaver, columns, rows }) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     return (
@@ -20,9 +20,7 @@ const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
                                     {column.label}
                                 </StyledTableCell>
                             ))}
-                            <StyledTableCell align="center">
-                                Actions
-                            </StyledTableCell>
+                           
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
@@ -43,9 +41,9 @@ const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
                                                 </StyledTableCell>
                                             );
                                         })}
-                                            <StyledTableCell align="center">
+                                            {/* <StyledTableCell align="center">
                                                 <ButtonHaver row={row} />
-                                            </StyledTableCell>
+                                            </StyledTableCell> */}
                                     </StyledTableRow>
                                 );
                             })}
@@ -68,4 +66,4 @@ const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
     )
 }
 
-export default TableTemplate
+export default TableTemplateAssignment

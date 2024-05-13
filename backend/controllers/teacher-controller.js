@@ -239,6 +239,39 @@ const teacherAttendance = async (req, res) => {
   }
 };
 
+
+const fetchAssignments = async (req, res) => {
+
+  try {
+    const subject = await Subject.findById(req.params.id);
+
+    const data = subject.announcements;
+
+    const result = data.filter(el=>el.type==="1");
+
+    return res.send(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+
+}
+
+const fetchQuiz = async (req, res) => {
+
+  try {
+    const subject = await Subject.findById(req.params.id);
+
+    const data = subject.announcements;
+
+    const result = data.filter(el=>el.type==="2");
+
+    return res.send(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+
+}
+
 module.exports = {
   teacherRegister,
   teacherLogIn,
@@ -250,4 +283,6 @@ module.exports = {
   deleteTeachers,
   deleteTeachersByClass,
   teacherAttendance,
+  fetchAssignments,
+  fetchQuiz
 };

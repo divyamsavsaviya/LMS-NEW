@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, Tab, Container, Typography, BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import { BlueButton, GreenButton, PurpleButton } from '../../../components/buttonStyles';
 import TableTemplate from '../../../components/TableTemplate';
+import TableTemplateAssignment from "../../../components/TableTemplateAssignment";
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -33,6 +34,7 @@ const ViewSubject = () => {
     console.log(error)
   }
 
+  //page navigation handler 
   const [value, setValue] = useState('1');
 
   const handleChange = (event, newValue) => {
@@ -58,9 +60,39 @@ const ViewSubject = () => {
   })
 
 
+
+
   /* adding assignment inputs */
 
 
+  const [assignment, setAssignment] = useState([]);
+  const [quiz, setQuiz] = useState([]);
+
+  const apiCall = async()=>{
+
+  
+    const response = await fetch(`http://localhost:5000/assignments/${subjectID}`);
+
+    
+
+    const data = await response.json();
+
+    setAssignment(data);
+
+  }
+
+
+  const apiCallQuiz = async()=>{
+    const response = await fetch(`http://localhost:5000/quiz/${subjectID}`);
+    const data = await response.json();
+    setQuiz(data);
+  }
+
+
+  useEffect(()=>{
+    apiCall();
+    apiCallQuiz();
+  },[]);
 
 
   
@@ -120,16 +152,18 @@ const ViewSubject = () => {
     { id: 'dueDate', label: 'Due Date', minWidth: 100 },
     { id: 'totalGrade', label: 'Total Grade', minWidth: 100 },
     { id: 'description', label: 'Description', minWidth: 200 },
-    { id: 'assignMarks', label: 'Assign Marks', minWidth: 100, align: 'center', buttonHaver: AssignmentsButtonHaver },
+    //{ id: 'assignMarks', label: 'Assign Marks', minWidth: 100, align: 'center', buttonHaver: AssignmentsButtonHaver },
   ];
 
-  const assignmentRows = subjectDetails && subjectDetails.assignments ? subjectDetails.assignments.map((assignment) => ({
-    title: assignment.title,
-    dueDate: assignment.dueDate,
-    totalGrade: assignment.totalGrade,
-    description: assignment.description,
-    id: assignment._id,
+  const assignmentRows =  assignment.length>0 ?assignment.map((a,index) => ({
+    "title": a.title,
+    "dueDate": a.deadline,
+    "totalGrade": a.marks.toString(),
+    "description": a.description,
+    "id": a._id,
   })) : [];
+
+  
 
   const QuizzesButtonHaver = ({ row }) => (
     <>
@@ -147,18 +181,19 @@ const ViewSubject = () => {
     { id: 'dueDate', label: 'Due Date', minWidth: 100 },
     { id: 'totalGrade', label: 'Total Grade', minWidth: 100 },
     { id: 'description', label: 'Description', minWidth: 200 },
-    { id: 'assignMarks', label: 'Assign Marks', minWidth: 100, align: 'center', buttonHaver: QuizzesButtonHaver },
+   // { id: 'assignMarks', label: 'Assign Marks', minWidth: 100, align: 'center', buttonHaver: QuizzesButtonHaver },
   ];
 
-  const quizRows = subjectDetails && subjectDetails.quizzes ? subjectDetails.quizzes.map((quiz) => ({
-    title: quiz.title,
-    dueDate: quiz.dueDate,
-    totalGrade: quiz.totalGrade,
-    description: quiz.description,
-    id: quiz._id,
+  const quizRows =  quiz.length>0 ? quiz.map((q) => ({
+    title: q.title,
+    dueDate: q.deadline,
+    totalGrade: q.marks.toString(),
+    description: q.description,
+    id: q._id,
   })) : [];
   
   const SubjectAssignmentsSection = () => (
+    
     <>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
         <Typography variant="h5">
@@ -166,12 +201,12 @@ const ViewSubject = () => {
         </Typography>
         <BlueButton
           variant="contained"
-          onClick={() => navigate(`/Teacher/subject/assignment/663c74fcd6befc1b04a41588/${subjectID}`)}
+          onClick={() => navigate(`/Teacher/subject/assignment/${subjectID}`)}
         >
           Add Assignment
         </BlueButton>
       </Box>
-      <TableTemplate columns={assignmentColumns} rows={assignmentRows} />
+      <TableTemplateAssignment columns={assignmentColumns} rows={assignmentRows} />
     </>
   );
 
@@ -184,12 +219,12 @@ const ViewSubject = () => {
         </Typography>
         <BlueButton
           variant="contained"
-          onClick={() => navigate(`/Teacher/subject/quiz/663c74fcd6befc1b04a41588/${subjectID}`)}
+          onClick={() => navigate(`/Teacher/subject/quiz/${subjectID}`)}
         >
           Add Quiz
         </BlueButton>
       </Box>
-      <TableTemplate columns={quizColumns} rows={quizRows} />
+      <TableTemplateAssignment columns={quizColumns} rows={quizRows} />
     </>
   );
   
