@@ -44,7 +44,7 @@ const ShowSubjects = () => {
     }
 
     const subjectColumns = [
-        { id: 'subName', label: 'Sub Name', minWidth: 170 },
+        { id: 'subName', label: 'Course Name', minWidth: 170 },
         { id: 'sclassName', label: 'Semester', minWidth: 170 },
          // Added teacherName column
     ];
@@ -63,9 +63,9 @@ const ShowSubjects = () => {
     const SubjectsButtonHaver = ({ row }) => {
         return (
             <>
-                <IconButton onClick={() => deleteHandler(row.id, "Subject")}>
+                {/* <IconButton onClick={() => deleteHandler(row.id, "Subject")}>
                     <DeleteIcon color="error" />
-                </IconButton>
+                </IconButton> */}
                 <BlueButton variant="contained"
                     onClick={() => navigate(`/Teacher/subjects/subject/${row.sclassID}/${row.id}`)}>
                     View
@@ -79,10 +79,10 @@ const ShowSubjects = () => {
             icon: <PostAddIcon color="primary" />, name: 'Add New Subject',
             action: () => navigate("/Admin/subjects/chooseclass")
         },
-        {
-            icon: <DeleteIcon color="error" />, name: 'Delete All Subjects',
-            action: () => deleteHandler(currentUser._id, "Subjects")
-        }
+        // {
+        //     icon: <DeleteIcon color="error" />, name: 'Delete All Subjects',
+        //     action: () => deleteHandler(currentUser._id, "Subjects")
+        // }
     ];
 
     return (

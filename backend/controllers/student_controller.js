@@ -307,7 +307,7 @@ const getStudentProfile = async (req, res) => {
 
     res.json(student.profile);
   } catch (error) {
-    console.error('Error updating user information:', error);
+    console.error('Error updating user informationw:', error);
     res.status(500).send('Server Error');
   }
 };

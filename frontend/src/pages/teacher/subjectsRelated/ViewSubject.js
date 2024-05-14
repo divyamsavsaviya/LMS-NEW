@@ -324,12 +324,11 @@ const ViewSubject = () => {
   
 
     const detailsRows = [
-      { detail: 'Subject Name', value: subjectDetails && subjectDetails.subName },
-      { detail: 'Subject Code', value: subjectDetails && subjectDetails.subCode },
-      { detail: 'Subject Sessions', value: subjectDetails && subjectDetails.sessions },
+      { detail: 'Course Name', value: subjectDetails && subjectDetails.subName },
+      { detail: 'Course Code', value: subjectDetails && subjectDetails.subCode },
+      { detail: 'Course Sessions', value: subjectDetails && subjectDetails.sessions },
       { detail: 'Number of Students', value: numberOfStudents },
       { detail: 'Class Name', value: subjectDetails && subjectDetails.sclassName && subjectDetails.sclassName.sclassName },
-      { detail: 'Course Description', value: subjectDetails && subjectDetails.courseDescription },
       {
         detail: 'Teacher Name',
         value: subjectDetails && subjectDetails.teacher ? (
@@ -360,15 +359,15 @@ const ViewSubject = () => {
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell>Subject Name</TableCell>
+                <TableCell>Course Name</TableCell>
                 <TableCell>{subjectDetails && subjectDetails.subName}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Subject Code</TableCell>
+                <TableCell>Course Code</TableCell>
                 <TableCell>{subjectDetails && subjectDetails.subCode}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Subject Sessions</TableCell>
+                <TableCell>Course Sessions</TableCell>
                 <TableCell>{subjectDetails && subjectDetails.sessions}</TableCell>
               </TableRow>
               <TableRow>
@@ -378,10 +377,6 @@ const ViewSubject = () => {
               <TableRow>
                 <TableCell>Class Name</TableCell>
                 <TableCell>{subjectDetails && subjectDetails.sclassName && subjectDetails.sclassName.sclassName}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Course Description</TableCell>
-                <TableCell>{subjectDetails && subjectDetails.courseDescription}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Teacher Name</TableCell>
