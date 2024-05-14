@@ -90,7 +90,7 @@ const ViewSubject = () => {
   }
 
   const apiCallAnnouncement = async()=>{
-    const response = await fetch(`http://localhost:5000/announcement/${subjectID}`);
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/announcement/${subjectID}`);
     const data = await response.json();
     setAnnouncement(data);
   }

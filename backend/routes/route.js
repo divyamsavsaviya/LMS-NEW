@@ -63,7 +63,8 @@ const {
   updateTeacherSubject,
   teacherAttendance,
   fetchAssignments,
-  fetchQuiz
+  fetchAnnouncement,
+  fetchQuiz,
 } = require("../controllers/teacher-controller.js");
 
 // Admin
@@ -120,6 +121,7 @@ router.post("/TeacherAttendance/:id", teacherAttendance);
 
 router.get("/assignments/:id", fetchAssignments);
 router.get("/quiz/:id", fetchQuiz);
+router.get("/announcement/:id", fetchAnnouncement);
 
 // Notice
 
