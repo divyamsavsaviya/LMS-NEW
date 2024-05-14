@@ -42,7 +42,7 @@ const TeacherDetails = () => {
                         Email : {teacherDetails?.email}
                     </Typography>
                     <Typography variant="h6" gutterBottom>
-                        Subject Name: {teacherDetails?.teachSubject[0]?.subName}
+                    Course Name: {teacherDetails?.teachSubject[0]?.subName}
                     </Typography>
                     
                 </Container>

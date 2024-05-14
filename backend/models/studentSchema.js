@@ -69,6 +69,14 @@ const studentSchema = new mongoose.Schema({
       },
     },
   ],
+  profile : {
+    dateOfBirth: String,
+    gender: String,
+    email: String,
+    phone: String,
+    address: String,
+    emergencyContact: String,
+  }
 });
 
 module.exports = mongoose.model("student", studentSchema);

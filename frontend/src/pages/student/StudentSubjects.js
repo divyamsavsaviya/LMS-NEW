@@ -134,12 +134,12 @@ const StudentSubjects = () => {
     const renderAnnouncementsSection = () => (
         <Container>
             <FormControl fullWidth style={{ margin: '20px 0' }}>
-            <InputLabel id="select-subject-label">Choose Subject</InputLabel>
+            <InputLabel id="select-subject-label">Choose Course</InputLabel>
             <Select
                 labelId="select-subject-label"
                 id="select-subject"
                 value={selectedSubject}
-                label="Choose Subject"
+                label="Choose Course"
                 onChange={onSubjectChange}
             >
                 {subjectsList.map((subject, index) => (
@@ -170,10 +170,10 @@ const renderGradesSection = () => {
             <Table >
                 <TableHead>
                     <StyledTableRow>
-                        <StyledTableCell>Subject</StyledTableCell>
+                        <StyledTableCell>Course</StyledTableCell>
                         <StyledTableCell>Description</StyledTableCell>
 
-                        <StyledTableCell>Marks</StyledTableCell>
+                        <StyledTableCell>Earned Grades</StyledTableCell>
                     </StyledTableRow>
                 </TableHead>
                 <TableBody>
@@ -208,14 +208,14 @@ const renderGradesSection = () => {
 /* Details Tab  */
 const renderClassDetailsSection = () => (
     <Container>
-        <Typography variant="h4" align="center">Class Details</Typography>
+        <Typography variant="h5" align="center"> .</Typography>
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="class details table">
                 <TableHead>
                     <TableRow>
                         <TableCell>Semester Name</TableCell>
-                        <TableCell>Subject Name</TableCell>
-                        <TableCell>Subject Code</TableCell>
+                        <TableCell>Course Name</TableCell>
+                        <TableCell>Course Code</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -287,12 +287,12 @@ const apiCallAnnouncement = async(subId) => {
 const renderAssignmentsAndQuizzesSection = () => (
     <Container>
         <FormControl fullWidth style={{ margin: '20px 0' }}>
-            <InputLabel id="select-subject-label">Choose Subject</InputLabel>
+            <InputLabel id="select-subject-label">Choose Course</InputLabel>
             <Select
                 labelId="select-subject-label"
                 id="select-subject"
                 value={selectedSubject}
-                label="Choose Subject"
+                label="Choose Course"
                 onChange={onSubjectChange}
             >
                 {subjectsList.map((subject, index) => (

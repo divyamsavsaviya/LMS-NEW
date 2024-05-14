@@ -272,11 +272,11 @@ const ViewStudent = () => {
         const renderTableSection = () => {
             return (
                 <>
-                    <h3>Subject Marks:</h3>
+                    <h3>Course Marks:</h3>
                     <Table>
                         <TableHead>
                             <StyledTableRow>
-                                <StyledTableCell>Subject</StyledTableCell>
+                                <StyledTableCell>Course</StyledTableCell>
                                 <StyledTableCell>Marks</StyledTableCell>
                             </StyledTableRow>
                         </TableHead>

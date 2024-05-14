@@ -65,7 +65,7 @@ const ChooseSubject = ({ situation }) => {
                         <TableHead>
                             <StyledTableRow>
                                 <StyledTableCell></StyledTableCell>
-                                <StyledTableCell align="center">Subject Name</StyledTableCell>
+                                <StyledTableCell align="center">Course Name</StyledTableCell>
                                 <StyledTableCell align="center">Subject Code</StyledTableCell>
                                 <StyledTableCell align="center">Actions</StyledTableCell>
                             </StyledTableRow>
