@@ -10,42 +10,44 @@ import { LightPurpleButton } from '../components/buttonStyles';
 const Homepage = () => {
     return (
         <>
-        <AppBar position="static">
+            <AppBar position="static" style={{ backgroundColor: '#fdb71a' }}>
                 <Toolbar>
-                    <Typography variant="h6">
-                        Learniverse
+                    <Typography variant="h6" style={{ flexGrow: 1 }}>
+                        SJSU LMS
                     </Typography>
                 </Toolbar>
             </AppBar>
-        <StyledContainer>
-            <Grid container spacing={0}>
-                <Grid item xs={12} md={6}>
-                    <img src={Students} alt="students" style={{ width: '100%' }} />
+            <StyledContainer>
+                <Grid container spacing={0} >
+                    <Grid item xs={12} md={6}>
+                        <img src='https://www.sjsu.edu/online/pics/sjsu-online-logo.svg' alt="students" style={{ width: '100%' }} />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <StyledPaper elevation={3}>
+                            <StyledTitle>
+                                Welcome to
+                                <br />
+                                Learning
+                                <br />
+                                management
+                                <br />
+                                System
+                            </StyledTitle>
+                            <StyledText>
+                                Streamline university management, course registration, and add students and faculty.
+                                Access records, view marks, and communicate effortlessly.
+                            </StyledText>
+                            <StyledBox>
+                                <StyledLink to="/choose">
+                                    <LightPurpleButton variant="contained" fullWidth>
+                                        Login
+                                    </LightPurpleButton>
+                                </StyledLink>
+                            </StyledBox>
+                        </StyledPaper>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <StyledPaper elevation={3}>
-                    <StyledTitle>
-                    Welcome to Learniverse
-                    <br />
-                    The Smart-Learning Management
-                    <br />
-                    System
-                    </StyledTitle>
-                        <StyledText>
-                            Streamline university management, class organization, and add students and faculty.
-                            Access records, view marks, and communicate effortlessly.
-                        </StyledText>
-                        <StyledBox>
-                            <StyledLink to="/choose">
-                                <LightPurpleButton variant="contained" fullWidth>
-                                    Login
-                                </LightPurpleButton>
-                            </StyledLink>
-                        </StyledBox>
-                    </StyledPaper>
-                </Grid>
-            </Grid>
-        </StyledContainer>
+            </StyledContainer>
         </>
     );
 };
@@ -71,6 +73,7 @@ const StyledBox = styled(Box)`
   justify-content:center;
   gap: 16px;
   padding: 24px;
+  backgroundColor:'#fdb71a'
 `;
 
 const StyledTitle = styled.h1`
@@ -93,4 +96,5 @@ const StyledText = styled.p`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
+  backgroundColor:'#fdb71a'
 `;

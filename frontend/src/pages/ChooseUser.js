@@ -87,13 +87,6 @@ const ChooseUser = ({ visitor }) => {
 
   return (
     <>
-        <AppBar position="static">
-                <Toolbar>
-                    <Typography variant="h6">
-                        Learniverse
-                    </Typography>
-                </Toolbar>
-            </AppBar>
     <StyledContainer>
       <Container>
         <Grid container spacing={2} justifyContent="center">
@@ -155,10 +148,11 @@ export default ChooseUser;
 
 const StyledContainer = styled.div`
   background: linear-gradient(to bottom, #411d70, #19118b);
-  height: 120vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   padding: 2rem;
+  justify-items: center;
 `;
 
 const StyledPaper = styled(Paper)`
