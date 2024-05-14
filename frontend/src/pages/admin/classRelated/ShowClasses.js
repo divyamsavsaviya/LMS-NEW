@@ -48,7 +48,7 @@ const ShowClasses = () => {
   }
 
   const sclassColumns = [
-    { id: 'name', label: 'Class Name', minWidth: 170 },
+    { id: 'name', label: 'Semesters', minWidth: 170 },
   ]
 
   const sclassRows = sclassesList && sclassesList.length > 0 && sclassesList.map((sclass) => {
@@ -142,7 +142,7 @@ const ShowClasses = () => {
         :
         <>
           {getresponse ?
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '16px',  alignItems: 'center' , height: '100vh'}}>
               <GreenButton variant="contained" onClick={() => navigate("/Admin/addclass")}>
                 Add Class
               </GreenButton>
@@ -157,6 +157,7 @@ const ShowClasses = () => {
         </>
       }
       <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
+
 
     </>
   );

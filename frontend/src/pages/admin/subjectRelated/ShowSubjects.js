@@ -48,13 +48,13 @@ const ShowSubjects = () => {
         { id: 'teacherName', label: 'Teacher', minWidth: 170 }, // Added teacherName column
     ];
 
-    const subjectRows = subjectsList.map((subject) => {
+    const subjectRows = subjectsList?.map((subject) => {
         return {
             subName: subject.subName,
             sessions: subject.sessions,
-            sclassName: subject.sclassName.sclassName,
+            sclassName: subject.sclassName?.sclassName,
             teacherName: subject.teacher ? subject.teacher.name : "Not Assigned", // Added teacherName property
-            sclassID: subject.sclassName._id,
+            sclassID: subject.sclassName?._id,
             id: subject._id,
         };
     });
