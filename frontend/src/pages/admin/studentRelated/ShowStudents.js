@@ -164,10 +164,10 @@ const ShowStudents = () => {
             icon: <PersonAddAlt1Icon color="primary" />, name: 'Add New Student',
             action: () => navigate("/Admin/addstudents")
         },
-        {
-            icon: <PersonRemoveIcon color="error" />, name: 'Delete All Students',
-            action: () => deleteHandler(currentUser._id, "Students")
-        },
+        // {
+        //     icon: <PersonRemoveIcon color="error" />, name: 'Delete All Students',
+        //     action: () => deleteHandler(currentUser._id, "Students")
+        // },
     ];
 
     return (
