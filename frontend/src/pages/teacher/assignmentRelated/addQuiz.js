@@ -179,7 +179,7 @@ const AddQuiz = ({ situation }) => {
                                 </BlueButton>
                             </form>
                             {success ? <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-      Assignment has been posted sucessfully
+      Quiz has been posted sucessfully
     </Alert>:""}
                         </Box>
                     </Box>

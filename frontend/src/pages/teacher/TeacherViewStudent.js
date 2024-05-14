@@ -77,7 +77,7 @@ const TeacherViewStudent = () => {
                     School: {studentSchool.schoolName}
                     <br /><br />
 
-                    <h3>Attendance:</h3>
+                    {/* <h3>Attendance:</h3>
                     {subjectAttendance && Array.isArray(subjectAttendance) && subjectAttendance.length > 0
                         &&
                         <>
@@ -167,45 +167,50 @@ const TeacherViewStudent = () => {
                         }
                     >
                         Add Attendance
-                    </Button>
+                    </Button> */}
                     <br /><br /><br />
                     <h3>Subject Marks:</h3>
 
                     {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0 &&
                         <>
-                            {subjectMarks.map((result, index) => {
-                                if (result.subName.subName === teachSubject) {
-                                    return (
-                                        <Table key={index}>
-                                            <TableHead>
-                                                <StyledTableRow>
-                                                    <StyledTableCell>Subject</StyledTableCell>
-                                                    <StyledTableCell>Marks</StyledTableCell>
-                                                </StyledTableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                <StyledTableRow>
-                                                    <StyledTableCell>{result.subName.subName}</StyledTableCell>
-                                                    <StyledTableCell>{result.marksObtained}</StyledTableCell>
-                                                </StyledTableRow>
-                                            </TableBody>
-                                        </Table>
-                                    )
-                                }
-                                else if (!result.subName || !result.marksObtained) {
-                                    return null;
-                                }
-                                return null
-                            })}
+                            <Table >
+                                <TableHead>
+                                    <StyledTableRow>
+                                        <StyledTableCell>Subject</StyledTableCell>
+                                        <StyledTableCell>Description</StyledTableCell>
+
+                                        <StyledTableCell>Marks</StyledTableCell>
+                                    </StyledTableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {subjectMarks.map((result, index) => {
+                                        // if (result.subName.subName === teachSubject) {
+                                        return (
+                                            <StyledTableRow>
+                                                <StyledTableCell>{result.subName.subName}</StyledTableCell>
+                                                <StyledTableCell>{result.description}</StyledTableCell>
+                                                <StyledTableCell>{result.marksObtained}</StyledTableCell>
+                                            </StyledTableRow>
+
+                                        )
+                                        // }
+                                        // else if (!result.subName || !result.marksObtained) {
+                                        //     return null;
+                                        // }
+                                        // return null
+                                    })}
+                                </TableBody>
+                            </Table>
+
                         </>
                     }
-                    <PurpleButton variant="contained"
+                    {/* <PurpleButton variant="contained"
                         onClick={() =>
                             navigate(
                                 `/Teacher/class/student/marks/${studentID}/${teachSubjectID}`
                             )}>
                         Add Marks
-                    </PurpleButton>
+                    </PurpleButton> */}
                     <br /><br /><br />
                 </div>
             }

@@ -25,6 +25,7 @@ const StudentExamMarks = ({ situation }) => {
     const [subjectName, setSubjectName] = useState("");
     const [chosenSubName, setChosenSubName] = useState("");
     const [marksObtained, setMarksObtained] = useState("");
+    const [description, setDescription] = useState("");
 
     const [showPopup, setShowPopup] = useState(false);
     const [message, setMessage] = useState("");
@@ -58,7 +59,7 @@ const StudentExamMarks = ({ situation }) => {
         setChosenSubName(selectedSubject._id);
     }
 
-    const fields = { subName: chosenSubName, marksObtained }
+    const fields = { subName: chosenSubName, marksObtained, description }
 
     const submitHandler = (event) => {
         event.preventDefault()
@@ -113,42 +114,22 @@ const StudentExamMarks = ({ situation }) => {
                                 <Typography variant="h4">
                                     Student Name: {userDetails.name}
                                 </Typography>
-                                {currentUser.teachSubject &&
+                                {/* {currentUser.teachSubject &&
                                     <Typography variant="h4">
                                         Subject Name: {currentUser.teachSubject?.subName}
                                     </Typography>
-                                }
+                                } */}
                             </Stack>
                             <form onSubmit={submitHandler}>
                                 <Stack spacing={3}>
-                                    {
-                                        situation === "Student" &&
-                                        <FormControl fullWidth>
-                                            <InputLabel id="demo-simple-select-label">
-                                                Select Subject
-                                            </InputLabel>
-                                            <Select
-                                                labelId="demo-simple-select-label"
-                                                id="demo-simple-select"
-                                                value={subjectName}
-                                                label="Choose an option"
-                                                onChange={changeHandler} required
-                                            >
-                                                {subjectsList ?
-                                                    subjectsList.map((subject, index) => (
-                                                        <MenuItem key={index} value={subject.subName}>
-                                                            {subject.subName}
-                                                        </MenuItem>
-                                                    ))
-                                                    :
-                                                    <MenuItem value="Select Subject">
-                                                        Add Subjects For Marks
-                                                    </MenuItem>
-                                                }
-                                            </Select>
-                                        </FormControl>
-                                    }
                                     <FormControl>
+                                    <TextField type="text" label='Enter Description' sx={{ marginBottom: '10px' }}
+                                            value={description} required
+                                            onChange={(e) => setDescription(e.target.value)}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                        />
                                         <TextField type="number" label='Enter marks'
                                             value={marksObtained} required
                                             onChange={(e) => setMarksObtained(e.target.value)}

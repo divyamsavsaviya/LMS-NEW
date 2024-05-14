@@ -70,7 +70,7 @@ const ViewSubject = () => {
 
   const apiCall = async()=>{
 
-  
+    
     const response = await fetch(`http://localhost:5000/assignments/${subjectID}`);
 
     
@@ -101,17 +101,17 @@ const ViewSubject = () => {
       <>
         <BlueButton
           variant="contained"
-          onClick={() => navigate("/Admin/students/student/" + row.id)}
+          onClick={() => navigate("/Teacher/class/student/" + row.id)}
         >
           View
         </BlueButton>
         <PurpleButton
           variant="contained"
           onClick={() =>
-            navigate(`/Admin/subject/student/attendance/${row.id}/${subjectID}`)
+            navigate(`/Teacher/class/student/marks/${row.id}/${subjectID}`)
           }
         >
-          Mark-Quizzes
+         Assign Grades
         </PurpleButton>
       </>
     );
@@ -229,6 +229,20 @@ const ViewSubject = () => {
   );
   
 
+  const SubjectAnnouncementsSection = () => (
+    <>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+        <Typography variant="h5">
+          Announcements List:
+        </Typography>
+        
+      </Box>
+      </>
+  );
+
+
+
+
 
   const SubjectStudentsSection = () => {
     return (
@@ -257,7 +271,7 @@ const ViewSubject = () => {
               <TableTemplate buttonHaver={StudentsMarksButtonHaver} columns={studentColumns} rows={studentRows} />
             }
 
-            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+            {/* <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
               <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
                 <BottomNavigationAction
                   label="Quizzes"
@@ -270,7 +284,7 @@ const ViewSubject = () => {
                   icon={selectedSection === 'marks' ? <InsertChartIcon /> : <InsertChartOutlinedIcon />}
                 />
               </BottomNavigation>
-            </Paper>
+            </Paper> */}
 
           </>
         )}
@@ -280,7 +294,34 @@ const ViewSubject = () => {
 
   const SubjectDetailsSection = () => {
     const numberOfStudents = sclassStudents.length;
+    const detailsColumns = [
+      { id: 'detail', label: 'Detail', minWidth: 200 },
+      { id: 'value', label: 'Value', minWidth: 300 },
+    ];
   
+
+    const detailsRows = [
+      { detail: 'Subject Name', value: subjectDetails && subjectDetails.subName },
+      { detail: 'Subject Code', value: subjectDetails && subjectDetails.subCode },
+      { detail: 'Subject Sessions', value: subjectDetails && subjectDetails.sessions },
+      { detail: 'Number of Students', value: numberOfStudents },
+      { detail: 'Class Name', value: subjectDetails && subjectDetails.sclassName && subjectDetails.sclassName.sclassName },
+      { detail: 'Course Description', value: subjectDetails && subjectDetails.courseDescription },
+      {
+        detail: 'Teacher Name',
+        value: subjectDetails && subjectDetails.teacher ? (
+          subjectDetails.teacher.name
+        ) : (
+          <GreenButton
+            variant="contained"
+            onClick={() => navigate("/Admin/teachers/addteacher/" + subjectDetails._id)}
+          >
+            Add Subject Teacher
+          </GreenButton>
+        ),
+      },
+    ];
+    
     return (
       <>
         <Typography variant="h4" align="center" gutterBottom>
@@ -358,6 +399,7 @@ const ViewSubject = () => {
                   <Tab label="Students" value="2" />
                   <Tab label="Assignments" value="3" />
                   <Tab label="Quizzes" value="4" />
+                  <Tab label="Announcements" value="5" />
                 </TabList>
               </Box>
               <Container sx={{ marginTop: '3rem', marginBottom: '4rem' }}>
@@ -373,6 +415,10 @@ const ViewSubject = () => {
                 <TabPanel value="4">
                   <SubjectQuizzesSection />
                 </TabPanel>
+                <TabPanel value="5">
+                  <SubjectAnnouncementsSection />
+                </TabPanel>
+
               </Container>
             </TabContext>
           </Box>

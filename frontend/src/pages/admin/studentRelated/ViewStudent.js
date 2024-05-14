@@ -421,6 +421,7 @@ const ViewStudent = () => {
                                 <TabPanel value="3">
                                     <StudentMarksSection />
                                 </TabPanel>
+                                
                             </Container>
                         </TabContext>
                     </Box>

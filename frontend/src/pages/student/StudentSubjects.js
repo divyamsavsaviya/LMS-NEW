@@ -5,7 +5,7 @@ import { getUserDetails } from '../../redux/userRelated/userHandle';
 import { Paper, BottomNavigation, BottomNavigationAction, Container, Table, TableBody, Typography, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import CustomBarChart from '../../components/CustomBarChart';
 import { FormControl, MenuItem, Select, InputLabel } from '@mui/material';
-
+import { useNavigate, useParams } from 'react-router-dom';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import TableChartIcon from '@mui/icons-material/TableChart';
@@ -13,6 +13,8 @@ import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
 import InfoIcon from '@mui/icons-material/Info';
 import { Grid, Button } from '@mui/material';
 import { StyledTableCell, StyledTableRow } from '../../components/styles';
+import TableTemplateAssignment from "../../components/TableTemplateAssignment"; // Import the table component
+
 
 const StudentSubjects = () => {
     const dispatch = useDispatch();
@@ -59,7 +61,41 @@ const StudentSubjects = () => {
             .reduce((total, quiz) => total + quiz.totalGrade, 0);
     
         setTotalGrade(totalAssignmentsGrade + totalQuizzesGrade);
-    };
+    }; 
+
+
+
+    const quizColumns = [
+        { id: 'title', label: 'Quiz Title', minWidth: 170 },
+        { id: 'totalGrade', label: 'Total Grade', minWidth: 100 },
+        { id: 'dueDate', label: 'Due Date', minWidth: 100 },
+        { id: 'description', label: 'Description', minWidth: 200 },
+    ];
+
+    const assignmentColumns = [
+        { id: 'title', label: 'Assignment Title', minWidth: 170 },
+        { id: 'totalGrade', label: 'Total Grade', minWidth: 100 },
+        { id: 'dueDate', label: 'Due Date', minWidth: 100 },
+        { id: 'description', label: 'Description', minWidth: 200 },
+    ];
+
+    const quizRows = quizzes.map(quiz => ({
+        title: quiz.title,
+        totalGrade: quiz.totalGrade.toString(),
+        dueDate: quiz.datePosted,
+        description: "Sample description", // Example description
+    }));
+
+    const assignmentRows = assignments.map(assignment => ({
+        title: assignment.title,
+        totalGrade: assignment.totalGrade.toString(),
+        dueDate: assignment.datePosted,
+        description: "Sample description", // Example description
+    }));
+
+    //fetch 
+  
+
 
     /* const renderTableSection = () => (
         <Table>
@@ -81,6 +117,45 @@ const StudentSubjects = () => {
             </TableBody>
         </Table>
     ); */
+
+const renderGradesSection = () => {
+    return (
+        subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0 && (
+            <>
+            <Table >
+                <TableHead>
+                    <StyledTableRow>
+                        <StyledTableCell>Subject</StyledTableCell>
+                        <StyledTableCell>Description</StyledTableCell>
+
+                        <StyledTableCell>Marks</StyledTableCell>
+                    </StyledTableRow>
+                </TableHead>
+                <TableBody>
+                    {subjectMarks.map((result, index) => {
+                        // if (result.subName.subName === teachSubject) {
+                        return (
+                            <StyledTableRow>
+                                <StyledTableCell>{result.subName.subName}</StyledTableCell>
+                                <StyledTableCell>{result.description}</StyledTableCell>
+                                <StyledTableCell>{result.marksObtained}</StyledTableCell>
+                            </StyledTableRow>
+
+                        )
+                        // }
+                        // else if (!result.subName || !result.marksObtained) {
+                        //     return null;
+                        // }
+                        // return null
+                    })}
+                </TableBody>
+            </Table>
+
+        </> 
+        ) 
+    )
+}
+
 
     const renderChartSection = () => (
         <CustomBarChart chartData={subjectMarks} dataKey="marksObtained" />
@@ -114,6 +189,8 @@ const renderClassDetailsSection = () => (
     </Container>
 );
 
+
+
 /* Assignments and Quizzes  */
 const renderAssignmentsAndQuizzesSection = () => (
     <Container>
@@ -135,113 +212,62 @@ const renderAssignmentsAndQuizzesSection = () => (
         </FormControl>
         <Grid container spacing={3}>
             <Grid item xs={6}>
-                {/* Assignments Table */}
+                <TableTemplateAssignment columns={assignmentColumns} rows={assignmentRows} />
             </Grid>
             <Grid item xs={6}>
-                {/* Quizzes Table */}
+                <TableTemplateAssignment columns={quizColumns} rows={quizRows} />
             </Grid>
         </Grid>
-        
+
         <Button variant="contained" color="primary" onClick={calculateTotalGrade}>
             View Grade
         </Button>
         <Typography variant="h6" component="h2">
             Total Grade: {totalGrade}
         </Typography>
-        <Grid container spacing={3} alignItems="flex-start">
-            <Grid item xs={12} md={6}>
-                <Typography variant="h6" component="div">Quizzes</Typography>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 350 }} aria-label="quizzes table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Quiz Title</TableCell>
-                                <TableCell align="right">Total Grade</TableCell>
-                                <TableCell align="right">Date Posted</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {quizzes.filter(quiz => quiz.subjectCode === selectedSubject).map((quiz) => (
-                                <TableRow key={quiz.title}>
-                                    <TableCell component="th" scope="row">
-                                        {quiz.title}
-                                    </TableCell>
-                                    <TableCell align="right">{quiz.totalGrade}</TableCell>
-                                    <TableCell align="right">{quiz.datePosted}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-                <Typography variant="h6" component="div" style={{ marginTop: 0 }}>Assignments</Typography>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 350 }} aria-label="assignments table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Assignment Title</TableCell>
-                                <TableCell align="right">Total Grade</TableCell>
-                                <TableCell align="right">Date Posted</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {assignments.filter(assignment => assignment.subjectCode === selectedSubject).map((assignment) => (
-                                <TableRow key={assignment.title}>
-                                    <TableCell component="th" scope="row">
-                                        {assignment.title}
-                                    </TableCell>
-                                    <TableCell align="right">{assignment.totalGrade}</TableCell>
-                                    <TableCell align="right">{assignment.datePosted}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Grid>
-        </Grid>
     </Container>
 );
 
 
+
 /* Announcements */
 
-    return (
-        <div>
-            {loading ? (
-                <Typography>Loading...</Typography>
-            ) : (
-                <>
-                    <Paper elevation={3}>
-                        <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
+return (
+    <div>
+        {loading ? (
+            <Typography>Loading...</Typography>
+        ) : (
+            <>
+                <Paper elevation={3}>
+                    <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
                         <BottomNavigationAction
-                                label="Details"
-                                value="details"
-                                
-                            />
-
+                            label="Details"
+                            value="details"
+                        />
+                        <BottomNavigationAction
+                            label="Quizzes & Assignments"
+                            value="Quizzes/Assignments"
+                        />
+                        <BottomNavigationAction
+                            label="Announcements"
+                            value="Announcements"
+                        />
                             <BottomNavigationAction
-                                label="Quizzes&Assignments"
-                                value="Quizzes/Assignments"
-                                
-                            />
+                            label="Grades"
+                            value="Grades"
+                        />
 
-                                <BottomNavigationAction
-                                label="Announcements"
-                                value="Announcements"
-                                
-                            />
-                            
-                        </BottomNavigation>
-                    </Paper>
-                    {/* {selectedSection === 'table' && renderTableSection()} */}
-                    {selectedSection === 'Quizzes/Assignments' && renderAssignmentsAndQuizzesSection()}
-                    {selectedSection === 'details' && renderClassDetailsSection()}
-                </>
-            )}
-        </div>
-    );
+
+                    </BottomNavigation>
+                    
+                </Paper>
+                {selectedSection === 'Grades' && renderGradesSection()}
+                {selectedSection === 'Quizzes/Assignments' && renderAssignmentsAndQuizzesSection()}
+                {selectedSection === 'details' && renderClassDetailsSection()}
+            </>
+        )}
+    </div>
+);
 };
 
 export default StudentSubjects;
