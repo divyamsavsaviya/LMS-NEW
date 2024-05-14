@@ -15,12 +15,12 @@ const SideBar = () => {
     return (
         <>
             <React.Fragment>
-            <ListItemButton component={Link} to="/">
+            {/* <ListItemButton component={Link} to="/">
                     <ListItemIcon>
                         <HomeIcon color={location.pathname === ("/" || "/Admin/dashboard") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Home" />
-                </ListItemButton>
+                </ListItemButton> */}
                 <ListItemButton component={Link} to="/Admin/classes">
                     <ListItemIcon>
                         <ClassOutlinedIcon color={location.pathname.startsWith('/Admin/classes') ? 'primary' : 'inherit'} />
