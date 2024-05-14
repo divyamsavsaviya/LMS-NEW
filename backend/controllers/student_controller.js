@@ -297,6 +297,21 @@ const updateUserInfo = async (req, res) => {
   }
 };
 
+const getStudentProfile = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const student = await Student.findById(id);
+    if (!updatedStudent) {
+      return res.send({ message: 'Student not found' });
+    }
+
+    res.json(student.profile);
+  } catch (error) {
+    console.error('Error updating user information:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
 module.exports = {
   studentRegister,
   studentLogIn,
@@ -313,5 +328,6 @@ module.exports = {
   clearAllStudentsSubject,
   removeStudentSubjectBySubject,
   removeStudentSubject,
-  updateUserInfo
+  updateUserInfo,
+  getStudentProfile
 };
