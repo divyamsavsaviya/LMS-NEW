@@ -49,7 +49,7 @@ const ClassDetails = () => {
     const deleteHandler = (deleteID, address) => {
         console.log(deleteID);
         console.log(address);
-        setMessage("Sorry the delete function has been disabled for now.")
+        // setMessage("Sorry the delete function has been disabled for now.")
         setShowPopup(true)
         // dispatch(deleteUser(deleteID, address))
         //     .then(() => {
@@ -60,24 +60,29 @@ const ClassDetails = () => {
     }
 
     const subjectColumns = [
-        { id: 'name', label: 'Subject Name', minWidth: 170 },
-        { id: 'code', label: 'Subject Code', minWidth: 100 },
+        { id: 'name', label: 'Course Name', minWidth: 170 },
+        { id: 'code', label: 'Course Code', minWidth: 100 },
+        { id: 'subjectStatus', label: 'Subject Status', minWidth: 100 },
+        { id: 'sessions', label: 'Number of sessions', minWidth: 100 },
     ]
 
     const subjectRows = subjectsList && subjectsList.length > 0 && subjectsList.map((subject) => {
+        const subjectStatus = subject.subjectStatus ? "Published" : "Unpublished";
         return {
             name: subject.subName,
             code: subject.subCode,
             id: subject._id,
+            subjectStatus: subjectStatus,
+            sessions: subject.sessions,
         };
     })
 
     const SubjectsButtonHaver = ({ row }) => {
         return (
             <>
-                <IconButton onClick={() => deleteHandler(row.id, "Subject")}>
+                {/* <IconButton onClick={() => deleteHandler(row.id, "Subject")}>
                     <DeleteIcon color="error" />
-                </IconButton>
+                </IconButton> */}
                 <BlueButton
                     variant="contained"
                     onClick={() => {
@@ -92,13 +97,13 @@ const ClassDetails = () => {
 
     const subjectActions = [
         {
-            icon: <PostAddIcon color="primary" />, name: 'Add New Subject',
+            icon: <PostAddIcon color="primary" />, name: 'Add New Course',
             action: () => navigate("/Admin/addsubject/" + classID)
         },
-        {
-            icon: <DeleteIcon color="error" />, name: 'Delete All Subjects',
-            action: () => deleteHandler(classID, "SubjectsClass")
-        }
+        // {
+        //     // icon: <DeleteIcon color="error" />, name: 'Delete All Subjects',
+        //     action: () => deleteHandler(classID, "SubjectsClass")
+        // }
     ];
 
     const ClassSubjectsSection = () => {
@@ -110,13 +115,13 @@ const ClassDetails = () => {
                             variant="contained"
                             onClick={() => navigate("/Admin/addsubject/" + classID)}
                         >
-                            Add Subjects
+                            Add Course
                         </GreenButton>
                     </Box>
                     :
                     <>
                         <Typography variant="h5" gutterBottom>
-                            Subjects List:
+                            Courses List:
                         </Typography>
 
                         <TableTemplate buttonHaver={SubjectsButtonHaver} columns={subjectColumns} rows={subjectRows} />
@@ -169,10 +174,10 @@ const ClassDetails = () => {
             icon: <PersonAddAlt1Icon color="primary" />, name: 'Add New Student',
             action: () => navigate("/Admin/class/addstudents/" + classID)
         },
-        {
-            icon: <PersonRemoveIcon color="error" />, name: 'Delete All Students',
-            action: () => deleteHandler(classID, "StudentsClass")
-        },
+        // {
+        //     icon: <PersonRemoveIcon color="error" />, name: 'Delete All Students',
+        //     action: () => deleteHandler(classID, "StudentsClass")
+        // },
     ];
 
     const ClassStudentsSection = () => {
@@ -203,14 +208,6 @@ const ClassDetails = () => {
         )
     }
 
-    const ClassTeachersSection = () => {
-        return (
-            <>
-                Teachers
-            </>
-        )
-    }
-
     const ClassDetailsSection = () => {
         const numberOfSubjects = subjectsList.length;
         const numberOfStudents = sclassStudents.length;
@@ -224,7 +221,7 @@ const ClassDetails = () => {
                     Semester : {sclassDetails && sclassDetails.sclassName}
                 </Typography>
                 <Typography variant="h6" gutterBottom>
-                    Number of Subjects: {numberOfSubjects}
+                    Number of Courses: {numberOfSubjects}
                 </Typography>
                 <Typography variant="h6" gutterBottom>
                     Number of Students: {numberOfStudents}
@@ -260,9 +257,8 @@ const ClassDetails = () => {
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <TabList onChange={handleChange} sx={{ position: 'fixed', width: '100%', bgcolor: 'background.paper', zIndex: 1 }}>
                                     <Tab label="Details" value="1" />
-                                    <Tab label="Subjects" value="2" />
+                                    <Tab label="Courses" value="2" />
                                     <Tab label="Students" value="3" />
-                                    <Tab label="Teachers" value="4" />
                                 </TabList>
                             </Box>
                             <Container sx={{ marginTop: "3rem", marginBottom: "4rem" }}>
@@ -274,9 +270,6 @@ const ClassDetails = () => {
                                 </TabPanel>
                                 <TabPanel value="3">
                                     <ClassStudentsSection />
-                                </TabPanel>
-                                <TabPanel value="4">
-                                    <ClassTeachersSection />
                                 </TabPanel>
                             </Container>
                         </TabContext>

@@ -43,7 +43,7 @@ const ViewSubject = () => {
   };
 
   const studentColumns = [
-    { id: 'rollNum', label: 'Roll No.', minWidth: 100 },
+    { id: 'rollNum', label: 'ID Numbers', minWidth: 100 },
     { id: 'name', label: 'Name', minWidth: 170 },
   ]
 
@@ -64,14 +64,6 @@ const ViewSubject = () => {
         >
           View
         </BlueButton>
-        <PurpleButton
-          variant="contained"
-          onClick={() =>
-            navigate(`/Admin/subject/student/attendance/${row.id}/${subjectID}`)
-          }
-        >
-          Take Attendance
-        </PurpleButton>
       </>
     );
   };
@@ -147,19 +139,19 @@ const ViewSubject = () => {
     return (
       <>
         <Typography variant="h4" align="center" gutterBottom>
-          Subject Details
+          Course Details
         </Typography>
         <Typography variant="h6" gutterBottom>
-          Subject Name : {subjectDetails && subjectDetails.subName}
+        Course Name : {subjectDetails && subjectDetails.subName}
         </Typography>
         <Typography variant="h6" gutterBottom>
-          Subject Code : {subjectDetails && subjectDetails.subCode}
+        Course Code : {subjectDetails && subjectDetails.subCode}
         </Typography>
         <Typography variant="h6" gutterBottom>
-          Subject Sessions : {subjectDetails && subjectDetails.sessions}
+        Course Sessions : {subjectDetails && subjectDetails.sessions}
         </Typography>
         <Typography variant="h6" gutterBottom>
-          Number of Students: {numberOfStudents}
+          Number of Students : {numberOfStudents}
         </Typography>
         <Typography variant="h6" gutterBottom>
           Class Name : {subjectDetails && subjectDetails.sclassName && subjectDetails.sclassName.sclassName}
