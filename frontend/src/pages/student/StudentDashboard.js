@@ -32,7 +32,7 @@ const StudentDashboard = () => {
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <AppBar open={open} position='absolute'>
-                    <Toolbar sx={{ pr: '24px' }}>
+                    <Toolbar sx={{ pr: '24px' ,backgroundColor: '#fdb71a' }}>
                         <IconButton
                             edge="start"
                             color="inherit"

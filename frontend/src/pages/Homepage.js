@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Grid, Box, Button, AppBar, Toolbar, Typography } from '@mui/material';
 import styled from 'styled-components';
 import Students from "../assets/students.svg";
-import { LightPurpleButton } from '../components/buttonStyles';
+import { SpartenBlueButton } from '../components/buttonStyles';
 
 
 
@@ -39,9 +39,9 @@ const Homepage = () => {
                             </StyledText>
                             <StyledBox>
                                 <StyledLink to="/choose">
-                                    <LightPurpleButton variant="contained" fullWidth>
+                                    <SpartenBlueButton variant="contained" fullWidth>
                                         Login
-                                    </LightPurpleButton>
+                                    </SpartenBlueButton>
                                 </StyledLink>
                             </StyledBox>
                         </StyledPaper>
@@ -96,5 +96,5 @@ const StyledText = styled.p`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  backgroundColor:'#fdb71a'
+  backgroundColor:'#1e439b'
 `;
