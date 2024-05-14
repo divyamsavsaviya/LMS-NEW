@@ -39,24 +39,21 @@ const StudentSubjects = () => {
         setSelectedSection(newSection);
     };
 
-    const quizzes = [
-        { title: 'Quiz 1', totalGrade: 100, datePosted: '2022-01-01' },
-        // More quizzes...
-      ];
+    const [quiz, setQuiz]= useState([]);
+    const [assignment, setAssignment]= useState([]);
+    const [announcement, setAnnouncement]= useState([]);
 
-      const assignments = [
-        { title: 'Assignment 1', totalGrade: 100, datePosted: '2022-01-01' },
-    ];
     const [selectedSubject, setSelectedSubject] = useState('');
+    const [selectedSubjectId, setSelectedSubjectId] = useState('');
     const [totalGrade, setTotalGrade] = useState(0);
 
     // Function to calculate total grade
     const calculateTotalGrade = () => {
-        const totalAssignmentsGrade = assignments
+        const totalAssignmentsGrade = assignment
             .filter(assignment => assignment.subjectCode === selectedSubject)
             .reduce((total, assignment) => total + assignment.totalGrade, 0);
     
-        const totalQuizzesGrade = quizzes
+        const totalQuizzesGrade = quiz
             .filter(quiz => quiz.subjectCode === selectedSubject)
             .reduce((total, quiz) => total + quiz.totalGrade, 0);
     
@@ -79,20 +76,34 @@ const StudentSubjects = () => {
         { id: 'description', label: 'Description', minWidth: 200 },
     ];
 
-    const quizRows = quizzes.map(quiz => ({
+    const quizRows = quiz.length>0 ? quiz.map(quiz => ({
         title: quiz.title,
-        totalGrade: quiz.totalGrade.toString(),
-        dueDate: quiz.datePosted,
-        description: "Sample description", // Example description
-    }));
+        totalGrade: quiz.marks.toString(),
+        dueDate: quiz.deadline,
+        description: quiz.description, // Example description
+    })) :[];
 
-    const assignmentRows = assignments.map(assignment => ({
+    const assignmentRows = assignment.length >0 ? assignment.map(assignment => ({
         title: assignment.title,
-        totalGrade: assignment.totalGrade.toString(),
-        dueDate: assignment.datePosted,
-        description: "Sample description", // Example description
-    }));
+        totalGrade: assignment.marks.toString(),
+        dueDate: assignment.deadline,
+        description: assignment.description, // Example description
+    })) : [];
 
+    const announcementColumns = [
+        { id: 'title', label: 'Announcement Title', minWidth: 170 },
+        { id: 'dueDate', label: 'Date Posted', minWidth: 100 },
+        { id: 'description', label: 'Description', minWidth: 200 },
+    ];
+
+    const announcementRows = announcement.map(c => ({
+            title: c.title,
+            dueDate: c.deadline,
+            description: c.description,
+            id: c._id,
+        }));
+
+        
     //fetch 
   
 
@@ -117,6 +128,40 @@ const StudentSubjects = () => {
             </TableBody>
         </Table>
     ); */
+
+
+    
+    const renderAnnouncementsSection = () => (
+        <Container>
+            <FormControl fullWidth style={{ margin: '20px 0' }}>
+            <InputLabel id="select-subject-label">Choose Subject</InputLabel>
+            <Select
+                labelId="select-subject-label"
+                id="select-subject"
+                value={selectedSubject}
+                label="Choose Subject"
+                onChange={onSubjectChange}
+            >
+                {subjectsList.map((subject, index) => (
+                    <MenuItem key={index} value={subject._id}>
+                        {subject.subName}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <TableTemplateAssignment
+                columns={announcementColumns}
+                rows={announcementRows}
+              />
+            </Grid>
+          </Grid>
+        </Container>
+      );
+
+
+
 
 const renderGradesSection = () => {
     return (
@@ -191,6 +236,53 @@ const renderClassDetailsSection = () => (
 
 
 
+const onSubjectChange = async(event) => {
+
+    setSelectedSubject(event.target.value);
+     await apiCallAssignment(event.target.value);
+    
+
+     await apiCallQuiz(event.target.value);
+
+     await apiCallAnnouncement(event.target.value);
+    
+
+
+}
+
+
+const apiCallAssignment = async(subId) => {
+    console.log(subId)
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/assignments/${subId}`);
+
+    const data = await response.json();
+
+    console.log("assignment",data);
+
+    setAssignment(data);
+}
+
+const apiCallQuiz = async(subId) => {
+    
+    console.log(subId)
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/quiz/${subId}`);
+    const data = await response.json();
+    console.log("quiz",data);
+    setQuiz(data);
+
+}
+
+const apiCallAnnouncement = async(subId) => {
+    
+    console.log(subId)
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/announcement/${subId}`);
+    const data = await response.json();
+    console.log("announcement",data);
+    setAnnouncement(data);
+
+}
+
+
 /* Assignments and Quizzes  */
 const renderAssignmentsAndQuizzesSection = () => (
     <Container>
@@ -201,10 +293,10 @@ const renderAssignmentsAndQuizzesSection = () => (
                 id="select-subject"
                 value={selectedSubject}
                 label="Choose Subject"
-                onChange={e => setSelectedSubject(e.target.value)}
+                onChange={onSubjectChange}
             >
                 {subjectsList.map((subject, index) => (
-                    <MenuItem key={index} value={subject.subCode}>
+                    <MenuItem key={index} value={subject._id}>
                         {subject.subName}
                     </MenuItem>
                 ))}
@@ -219,12 +311,12 @@ const renderAssignmentsAndQuizzesSection = () => (
             </Grid>
         </Grid>
 
-        <Button variant="contained" color="primary" onClick={calculateTotalGrade}>
+        {/* <Button variant="contained" color="primary" onClick={calculateTotalGrade}>
             View Grade
         </Button>
         <Typography variant="h6" component="h2">
             Total Grade: {totalGrade}
-        </Typography>
+        </Typography> */}
     </Container>
 );
 
@@ -261,6 +353,7 @@ return (
                     </BottomNavigation>
                     
                 </Paper>
+                {selectedSection === 'Announcements' && renderAnnouncementsSection()}
                 {selectedSection === 'Grades' && renderGradesSection()}
                 {selectedSection === 'Quizzes/Assignments' && renderAssignmentsAndQuizzesSection()}
                 {selectedSection === 'details' && renderClassDetailsSection()}

@@ -13,6 +13,8 @@ import {
     setAssignmentFailure,
     setQuizSuccess,
     setQuizFailure,
+    setAnnouncementSuccess,
+    setAnnouncementFailure,
     getSubDetailsRequest
 } from './sclassSlice';
 
@@ -116,6 +118,26 @@ export const setQuiz = (id, fields, address) => async (dispatch) => {
     } catch (error) {
         console.error("Failed to post the quiz", error);
         dispatch(setQuizFailure(error));
+        dispatch(getError(error)); // Optionally maintain a general error as well
+        return Promise.reject(error); // Returning a rejected promise
+    }
+    
+};
+
+export const setAnnouncement = (id, fields, address) => async (dispatch) => {
+    dispatch(getRequest()); // Indicate loading state
+    try {
+        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/${address}/${id}`, fields, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        // Handle response based on its structure
+        if (response.data) {
+            dispatch(setAnnouncementSuccess(response.data));
+            return Promise.resolve(response.data); // Ensuring this thunk returns a promise
+        }
+    } catch (error) {
+        console.error("Failed to post the announcement", error);
+        dispatch(setAnnouncementFailure(error));
         dispatch(getError(error)); // Optionally maintain a general error as well
         return Promise.reject(error); // Returning a rejected promise
     }

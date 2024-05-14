@@ -272,6 +272,22 @@ const fetchQuiz = async (req, res) => {
 
 }
 
+const fetchAnnouncement = async (req, res) => {
+
+  try {
+    const subject = await Subject.findById(req.params.id);
+
+    const data = subject.announcements;
+
+    const result = data.filter(el=>el.type==="0");
+
+    return res.send(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+
+}
+
 module.exports = {
   teacherRegister,
   teacherLogIn,
@@ -284,5 +300,6 @@ module.exports = {
   deleteTeachersByClass,
   teacherAttendance,
   fetchAssignments,
-  fetchQuiz
+  fetchQuiz,
+  fetchAnnouncement
 };
