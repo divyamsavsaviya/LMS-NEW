@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authLogout } from '../redux/userRelated/userSlice';
@@ -32,22 +32,27 @@ const Logout = () => {
 export default Logout;
 
 const LogoutContainer = styled.div`
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-  background-color: #85769f66;
-  color: black;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: #f2f2f2;
+  color: #333;
+  z-index: 999; /* Ensure it appears above other content */
 `;
 
 const LogoutMessage = styled.p`
   margin-bottom: 20px;
-  font-size: 16px;
+  font-size: 18px;
   text-align: center;
+  color: #666;
 `;
 
 const LogoutButton = styled.button`
@@ -57,17 +62,18 @@ const LogoutButton = styled.button`
   font-size: 16px;
   color: #fff;
   cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
 
   &:hover {
-    color: #fff;
-    background-color: #333;
+    opacity: 0.8;
   }
 `;
 
 const LogoutButtonLogout = styled(LogoutButton)`
-  background-color: #ea0606;
+  background-color: #1976d2;
 `;
 
 const LogoutButtonCancel = styled(LogoutButton)`
-  background-color: rgb(99, 60, 99);
+  background-color: #bdbdbd;
 `;
