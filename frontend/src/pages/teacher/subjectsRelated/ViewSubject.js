@@ -67,6 +67,7 @@ const ViewSubject = () => {
 
   const [assignment, setAssignment] = useState([]);
   const [quiz, setQuiz] = useState([]);
+  const [announcement, setAnnouncement] = useState([]);
 
   const apiCall = async()=>{
 
@@ -88,10 +89,16 @@ const ViewSubject = () => {
     setQuiz(data);
   }
 
+  const apiCallAnnouncement = async()=>{
+    const response = await fetch(`http://localhost:5000/announcement/${subjectID}`);
+    const data = await response.json();
+    setAnnouncement(data);
+  }
 
   useEffect(()=>{
     apiCall();
     apiCallQuiz();
+    apiCallAnnouncement();
   },[]);
 
 
@@ -165,16 +172,7 @@ const ViewSubject = () => {
 
   
 
-  const QuizzesButtonHaver = ({ row }) => (
-    <>
-      <BlueButton variant="contained" onClick={() => navigate("/Admin/students/student/" + row.id)}>
-        View
-      </BlueButton>
-      <PurpleButton variant="contained" onClick={() => navigate(`/Admin/subject/quiz/details/${row.id}/${subjectID}`)}>
-        Assign Marks
-      </PurpleButton>
-    </>
-  );
+  
 
   const quizColumns = [
     { id: 'title', label: 'Quiz Title', minWidth: 170 },
@@ -191,6 +189,25 @@ const ViewSubject = () => {
     description: q.description,
     id: q._id,
   })) : [];
+
+
+  const announcementColumns = [
+    { id: 'title', label: 'Announcement Title', minWidth: 170 },
+    { id: 'dueDate', label: 'Date Posted', minWidth: 100 },
+    
+    { id: 'description', label: 'Description', minWidth: 200 },
+    //{ id: 'assignMarks', label: 'Assign Marks', minWidth: 100, align: 'center', buttonHaver: AssignmentsButtonHaver },
+  ];
+
+  const announcementRows =  announcement.length>0 ? announcement.map((c) => ({
+    title: c.title,
+    dueDate: c.deadline,
+   /*  totalGrade: q.marks.toString(), */
+    description: c.description,
+    id: c._id,
+  })) : [];
+
+
   
   const SubjectAssignmentsSection = () => (
     
@@ -233,11 +250,17 @@ const ViewSubject = () => {
     <>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
         <Typography variant="h5">
-          Announcements List:
+          Announcement List:
         </Typography>
-        
+        <BlueButton
+          variant="contained"
+          onClick={() => navigate(`/Teacher/subject/announcement/${subjectID}`)}
+        >
+          Add Announcement
+        </BlueButton>
       </Box>
-      </>
+      <TableTemplateAssignment columns={announcementColumns} rows={announcementRows} />
+    </>
   );
 
 

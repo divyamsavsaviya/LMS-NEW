@@ -92,6 +92,16 @@ const sclassSlice = createSlice({
             state.loading = false;
             state.error = action.payload; // Error object
         },
+
+        setAnnouncementSuccess: (state, action) => {
+            state.loading = false;
+            state.response = action.payload; // Assuming payload is the successful response data
+            state.error = null;
+        },
+        setAnnouncementFailure: (state, action) => {
+            state.loading = false;
+            state.error = action.payload; // Error object
+        },
     },
 });
 
@@ -108,6 +118,8 @@ export const {
     getSubDetailsSuccess,
     setAssignmentSuccess,
     setAssignmentFailure,
+    setAnnouncementSuccess,
+    setAnnouncementFailure,
     setQuizSuccess,
     setQuizFailure,
     getSubDetailsRequest

@@ -27,6 +27,7 @@ import StudentExamMarks from '../admin/studentRelated/StudentExamMarks';
 import ShowSubjects from './TeacherShowSubjects';
 import ViewSubject from './subjectsRelated/ViewSubject';
 import AddQuiz from './assignmentRelated/addQuiz';
+import AddAnnouncement from './assignmentRelated/addAnnouncement';
 
 const TeacherDashboard = () => {
     const [open, setOpen] = useState(true);
@@ -89,11 +90,13 @@ const TeacherDashboard = () => {
                         <Route path="/Teacher/class/student/:id" element={<TeacherViewStudent />} />
                         <Route path="/Teacher/subject/assignment/:id" element={<AddAssignment situation="Teacher" />} />
                         <Route path='/Teacher/subject/quiz/:id' element={<AddQuiz situation="Teacher"/>} />
+                        <Route path="/Teacher/subject/announcement/:id" element={<AddAnnouncement situation="Teacher" />} />
 
                         <Route path="/Teacher/class/student/attendance/:studentID/:subjectID" element={<StudentAttendance situation="Subject" />} />
                         <Route path="/Teacher/class/student/marks/:studentID/:subjectID" element={<StudentExamMarks situation="Subject" />} />
                         <Route path="/Teacher/subject/assignment/:studentID/:subjectID" element={<AddAssignment situation="Subject" />} />
                         <Route path="/Teacher/subject/quiz/:studentID/:subjectID" element={<AddQuiz situation="Subject" />} />
+                        <Route path="/Teacher/subject/announcement/:studentID/:subjectID" element={<AddAnnouncement situation="Subject" />} />
                         <Route path="/logout" element={<Logout />} />
                     </Routes>
                 </Box>
