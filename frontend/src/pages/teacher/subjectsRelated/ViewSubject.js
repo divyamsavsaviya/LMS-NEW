@@ -72,7 +72,7 @@ const ViewSubject = () => {
   const apiCall = async()=>{
 
     
-    const response = await fetch(`http://localhost:5000/assignments/${subjectID}`);
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/assignments/${subjectID}`);
 
     
 
@@ -84,7 +84,7 @@ const ViewSubject = () => {
 
 
   const apiCallQuiz = async()=>{
-    const response = await fetch(`http://localhost:5000/quiz/${subjectID}`);
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/quiz/${subjectID}`);
     const data = await response.json();
     setQuiz(data);
   }
