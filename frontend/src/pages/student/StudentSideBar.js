@@ -14,12 +14,12 @@ const StudentSideBar = () => {
     return (
         <>
             <React.Fragment>
-                <ListItemButton component={Link} to="/">
+                {/* <ListItemButton component={Link} to="/">
                     <ListItemIcon>
                         <HomeIcon color={location.pathname === ("/" || "/Student/dashboard") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Home" />
-                </ListItemButton>
+                </ListItemButton> */}
                 <ListItemButton component={Link} to="/Student/subjects">
                     <ListItemIcon>
                         <AssignmentIcon color={location.pathname.startsWith("/Student/subjects") ? 'primary' : 'inherit'} />
