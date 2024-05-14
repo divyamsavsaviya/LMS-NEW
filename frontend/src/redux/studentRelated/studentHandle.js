@@ -53,3 +53,37 @@ export const removeStuff = (id, address) => async (dispatch) => {
         dispatch(getError(error));
     }
 }
+
+export const updateStudentProfile = (id, editedInfo) => async (dispatch) => {
+    dispatch(getRequest());
+
+    try {
+        const result = await axios.put(`${process.env.REACT_APP_BASE_URL}/updateStudentInfo/${id}`, editedInfo, {
+            headers: { 'Content-Type': 'application/json' },
+        });
+        if (result.data.message) {
+            dispatch(getFailed(result.data.message));
+        } else {
+            dispatch(stuffDone());
+        }
+    } catch (error) {
+        // Store only the error message in the Redux state
+        dispatch(getError(error.message));
+    }
+};
+
+export const getStudentProfile = (id) => async (dispatch) => {
+    dispatch(getRequest());
+
+    try {
+        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/studentProfile/${id}`);
+        if (result.data.message) {
+            dispatch(getFailed(result.data.message));
+        } else {
+            dispatch(getSuccess(result.data));
+        }
+    } catch (error) {
+        // Store only the error message in the Redux state
+        dispatch(getError(error.message));
+    }
+};

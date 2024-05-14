@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Card, CardContent, Typography, Grid, Box, Avatar, Container, Paper, Button, TextField } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateStudentProfile , getStudentProfile} from '../../redux/studentRelated/studentHandle';
 
 const StudentProfile = () => {
-  const { currentUser, response, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { currentUser, response, error , studentList } = useSelector((state) => state.user);
   const [editMode, setEditMode] = useState(false);
   const [editedInfo, setEditedInfo] = useState({
     dateOfBirth: currentUser.dateOfBirth || '',
@@ -15,17 +17,38 @@ const StudentProfile = () => {
     emergencyContact: currentUser.emergencyContact || '',
   });
 
+  useEffect(() => {
+    dispatch(getStudentProfile(currentUser._id));
+  }, []); // Empty dependency array ensures this effect runs only once on mount
+
+
+  useEffect(() => {
+    setEditedInfo({
+      dateOfBirth: currentUser.dateOfBirth || '',
+      gender: currentUser.gender || '',
+      email: currentUser.email || '',
+      phone: currentUser.phone || '',
+      address: currentUser.address || '',
+      emergencyContact: currentUser.emergencyContact || '',
+    });
+  }, [currentUser]);
+
   const handleEditClick = () => {
     setEditMode(true);
   };
 
   const handleSaveClick = () => {
     // Here, you can update the user's information in your state or database
+    dispatch(updateStudentProfile(currentUser._id, editedInfo));
     setEditMode(false);
   };
 
   const handleChange = (e) => {
-    setEditedInfo({ ...editedInfo, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setEditedInfo(prevEditedInfo => ({
+      ...prevEditedInfo,
+      [name]: value
+    }));
   };
 
   if (response) {
@@ -96,6 +119,7 @@ const StudentProfile = () => {
                     value={editedInfo.dateOfBirth}
                     onChange={handleChange}
                     fullWidth
+                    required
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -105,6 +129,7 @@ const StudentProfile = () => {
                     value={editedInfo.gender}
                     onChange={handleChange}
                     fullWidth
+                    required
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -114,6 +139,7 @@ const StudentProfile = () => {
                     value={editedInfo.email}
                     onChange={handleChange}
                     fullWidth
+                    required
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -123,6 +149,7 @@ const StudentProfile = () => {
                     value={editedInfo.phone}
                     onChange={handleChange}
                     fullWidth
+                    required
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -132,6 +159,7 @@ const StudentProfile = () => {
                     value={editedInfo.address}
                     onChange={handleChange}
                     fullWidth
+                    required
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -141,10 +169,11 @@ const StudentProfile = () => {
                     value={editedInfo.emergencyContact}
                     onChange={handleChange}
                     fullWidth
+                    required
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Button variant="contained" color="primary" onClick={handleSaveClick}>
+                  <Button variant="contained" color="primary" onClick={handleSaveClick} disabled={!editedInfo.dateOfBirth || !editedInfo.gender || !editedInfo.email || !editedInfo.phone || !editedInfo.address || !editedInfo.emergencyContact}>
                     Save
                   </Button>
                 </Grid>
@@ -153,32 +182,32 @@ const StudentProfile = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1" component="p">
-                    <strong>Date of Birth:</strong> January 1, 2000
+                    <strong>Date of Birth:</strong> {editedInfo.dateOfBirth}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1" component="p">
-                    <strong>Gender:</strong> Male
+                    <strong>Gender:</strong> {editedInfo.gender}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1" component="p">
-                    <strong>Email:</strong> john.doe@example.com
+                    <strong>Email:</strong> {editedInfo.email}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1" component="p">
-                    <strong>Phone:</strong> (123) 456-7890
+                    <strong>Phone:</strong> {editedInfo.phone}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1" component="p">
-                    <strong>Address:</strong> 123 Main Street, City, Country
+                    <strong>Address:</strong> {editedInfo.address}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1" component="p">
-                    <strong>Emergency Contact:</strong> (987) 654-3210
+                    <strong>Emergency Contact:</strong> {editedInfo.emergencyContact}
                   </Typography>
                 </Grid>
               </Grid>
