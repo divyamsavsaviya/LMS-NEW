@@ -88,58 +88,52 @@ const ChooseUser = ({ visitor }) => {
   return (
     <>
     <StyledContainer>
-      <Container>
-        <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={12} sm={6} md={4}>
-            <div onClick={() => navigateHandler("Admin")}>
-              <StyledPaper elevation={3}>
-                <Box mb={2}>
-                  <AccountCircle fontSize="large" />
-                </Box>
-                <StyledTypography>
-                  Admin
-                </StyledTypography>
-                Login as an administrator to access the dashboard to manage app data.
-              </StyledPaper>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <StyledPaper elevation={3}>
-              <div onClick={() => navigateHandler("Student")}>
-                <Box mb={2}>
-                  <School fontSize="large" />
-                </Box>
-                <StyledTypography>
-                  Student
-                </StyledTypography>
-                Login as a student to explore course materials and assignments.
-              </div>
-            </StyledPaper>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <StyledPaper elevation={3}>
-              <div onClick={() => navigateHandler("Teacher")}>
-                <Box mb={2}>
-                  <Group fontSize="large" />
-                </Box>
-                <StyledTypography>
-                  Teacher
-                </StyledTypography>
-                Login as a teacher to create courses, assignments, and track student progress.
-              </div>
-            </StyledPaper>
-          </Grid>
-        </Grid>
-      </Container>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loader}
-      >
-        <CircularProgress color="inherit" />
-        Please Wait
-      </Backdrop>
-      <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
-    </StyledContainer>
+  <Container>
+    <Grid container spacing={4} justifyContent="center">
+      <Grid item xs={12} sm={6} md={4}>
+        <div onClick={() => navigateHandler("Admin")}>
+          <StyledPaper elevation={3}>
+            <IconWrapper>
+              <AccountCircle />
+            </IconWrapper>
+            <StyledTypography>Admin</StyledTypography>
+            <Description>Login as an administrator to access the dashboard to manage app data.</Description>
+          </StyledPaper>
+        </div>
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <StyledPaper elevation={3}>
+          <div onClick={() => navigateHandler("Student")}>
+            <IconWrapper>
+              <School />
+            </IconWrapper>
+            <StyledTypography>Student</StyledTypography>
+            <Description>Login as a student to explore course materials and assignments.</Description>
+          </div>
+        </StyledPaper>
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <StyledPaper elevation={3}>
+          <div onClick={() => navigateHandler("Teacher")}>
+            <IconWrapper>
+              <Group />
+            </IconWrapper>
+            <StyledTypography>Teacher</StyledTypography>
+            <Description>Login as a teacher to create assignments and track progress.</Description>
+          </div>
+        </StyledPaper>
+      </Grid>
+    </Grid>
+  </Container>
+  <StyledBackdrop open={loader}>
+    <CircularProgressWrapper>
+      <StyledCircularProgress size={24} />
+      <LoaderText>Please Wait</LoaderText>
+    </CircularProgressWrapper>
+  </StyledBackdrop>
+  <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
+</StyledContainer>
+
     </>
   );
 };
@@ -147,27 +141,69 @@ const ChooseUser = ({ visitor }) => {
 export default ChooseUser;
 
 const StyledContainer = styled.div`
-  background: linear-gradient(to bottom, #411d70, #19118b);
+  background: #f5f5f5;
   height: 100vh;
   display: flex;
   justify-content: center;
-  padding: 2rem;
-  justify-items: center;
+  align-items: center;
 `;
 
 const StyledPaper = styled(Paper)`
   padding: 20px;
   text-align: center;
-  background-color: #1f1f38;
-  color:rgba(255, 255, 255, 0.6);
-  cursor:pointer;
+  background-color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
 
   &:hover {
-    background-color: #2c2c6c;
-    color:white;
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   }
 `;
 
 const StyledTypography = styled.h2`
   margin-bottom: 10px;
+  color: #333;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+
+  svg {
+    font-size: 3rem;
+    color: #6c63ff;
+  }
+`;
+
+const Description = styled.p`
+  color: #555;
+`;
+
+const StyledBackdrop = styled(Backdrop)`
+  && {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    z-index: 1500;
+  }
+`;
+
+const CircularProgressWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledCircularProgress = styled(CircularProgress)`
+  && {
+    color: #6c63ff;
+    margin-right: 10px;
+  }
+`;
+
+const LoaderText = styled.p`
+  font-size: 1rem;
+  font-weight: 500;
 `;
